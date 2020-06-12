@@ -8,7 +8,7 @@
     "dev": "webpack-dev-server --env.development --config ./build/webpack.base",
     "dev:build": "webpack --env.development --config ./build/webpack.base",
     "dll": "webpack --config ./build/webpack.dll.js",
-    "lint": "eslint --ext .ts --ext .tsx src/"
+    "lint": "eslint --fix --ext .ts,.tsx src"
   },
   "keywords": [],
   "author": "",
