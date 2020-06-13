@@ -2,9 +2,11 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-13 20:06:51
+ * @LastEditTime: 2020-06-13 23:17:55
  * @LastEditors: zs
  */
+// const DllReferencePlugin = require('webpack').DllReferencePlugin;
+// const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const path = require('path');
 const apiMocker = require('mocker-api')
 const fs = require('fs')
@@ -13,13 +15,24 @@ const mockData = require('../mock.config.js');
 
 const host = '127.0.0.1';
 const port = '4000';
-
 module.exports = {
 	mode: 'development',
 	devtool: 'eval-cheap-module-souce-map',
 	watchOptions: {
 		ignored: /node_modules/
 	},
+	plugins: [
+		// // 先到这里面进行查找
+		// new DllReferencePlugin({
+		// 	// 注意: DllReferencePlugin 的 context 必须和 package.json 的同级目录，要不然会链接失败
+		// 	context: path.resolve(__dirname, '../'),
+		// 	manifest: path.resolve(__dirname, '../dll/manifest.json')
+		// }),
+		// // 引入库里面打包好的内容，就是react和react-dom
+		// new AddAssetHtmlPlugin({
+		// 	filepath: path.resolve(__dirname, '../dll/react.dll.js')
+		// }),
+	],
 	devServer: { // 开发服务的配置 
 		host,
 		port,
