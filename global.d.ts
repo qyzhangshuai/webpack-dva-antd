@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-11 16:43:01
- * @LastEditTime: 2020-06-11 16:43:23
+ * @LastEditTime: 2020-06-13 20:36:54
  * @LastEditors: zs
  */
 declare module "*.css" {
@@ -26,3 +26,11 @@ declare module "*.json" {
   const content: object;
   export default content;
 }
+
+interface Window {
+  __state: any
+  __app: any
+}
+
+declare module 'dva-loading'
+declare module 'dva-model-extend'
