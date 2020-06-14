@@ -2,26 +2,24 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-13 20:20:53
- * @LastEditTime: 2020-06-13 20:22:44
+ * @LastEditTime: 2020-06-14 13:39:56
  * @LastEditors: zs
  */
 
-import AppState, { MenuItem } from './AppState';
-import Loading from './Loading';
-
-import { Pagination } from './common';
+import AppState from './AppState';
+import LoadingState from './Loading';
+import LoginState from './Login'
 
 interface RootState {
   app: AppState
-  loading: Loading
-
+  loading: LoadingState
+  login: LoginState,
 }
 
 export {
   // state:
   RootState,
   AppState,
-
-  Loading,
-
+  LoadingState,
+  LoginState
 }

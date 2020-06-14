@@ -68,6 +68,7 @@
     "@ant-design/icons": "^4.2.1",
     "antd": "^4.3.3",
     "axios": "^0.19.2",
+    "classnames": "^2.2.6",
     "dva": "^2.4.1",
     "dva-loading": "^3.0.20",
     "dva-model-extend": "^0.1.2",
@@ -80,6 +81,7 @@
     "qs": "^6.9.4",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0"
   }
 }

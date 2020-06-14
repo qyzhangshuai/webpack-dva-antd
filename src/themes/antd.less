@@ -1,0 +1,209 @@
+@import './default.less';
+
+:global {
+  .ant-btn {
+    border-radius: 16px;
+    font-size: 12px !important;
+
+    // *{
+    //     font-size: 12px;
+    // }
+    .ant-btn {
+      border-radius: 16px;
+      font-size: 12px !important;
+
+      &.ant-btn-primary {
+        box-shadow: @menu-selected-shadow;
+
+        &:disabled {
+          box-shadow: none;
+        }
+      }
+    }
+
+    &.ant-btn-primary {
+      box-shadow: @menu-selected-shadow;
+
+      &:disabled {
+        box-shadow: none;
+      }
+    }
+  }
+
+  .ant-tabs.ant-tabs-card {
+    .ant-tabs-bar {
+      margin-bottom: 30px;
+      border-color: @line-color;
+
+      .ant-tabs-nav {
+        .ant-tabs-tab {
+          background: none;
+          border: none;
+          border-bottom: 2px solid rgba(0, 0, 0, 0);
+          padding: 0 25px;
+        }
+
+        .ant-tabs-tab-active {
+          border-color: @primary-color;
+        }
+      }
+    }
+  }
+
+  // 自定义表格样式
+  .ant-table-tbody>tr {
+    @base-border: 1px solid @line-color;
+    @hover-border: 1px solid @primary-color  !important;
+
+    &>td {
+      border-bottom: @base-border;
+      border-top: 1px solid transparent;
+      text-align: left !important;
+      font-size: 12px;
+
+      &:first-child {
+        border-left: @base-border;
+      }
+
+      &:last-child {
+        border-right: @base-border;
+      }
+    }
+
+    &:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td {
+      background: fade(@primary-color, 5%) !important;
+      border-bottom: @hover-border;
+      border-top: @hover-border;
+
+      &:first-child {
+        border-left: @hover-border;
+      }
+
+      &:last-child {
+        border-right: @hover-border;
+      }
+    }
+
+    &:nth-child(1)>td {
+      border-top: 1px solid @line-color;
+    }
+
+    &.ant-table-expanded-row-level-1 * {
+      background: #fff;
+      color: @table-header-color;
+
+      .ant-table-thead tr {
+        th {
+          text-align: left !important;
+          border: none !important;
+
+          .ant-table-header-column {
+            vertical-align: middle !important;
+          }
+
+          .ant-table-column-title {
+            font-size: 12px;
+            line-height: 12px;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+
+    .ant-table-thead tr {
+      th {
+        text-align: left !important;
+        border: none !important;
+
+        .ant-table-header-column {
+          vertical-align: middle !important;
+        }
+
+        .ant-table-column-title {
+          font-size: 12px;
+          line-height: 12px;
+          font-weight: 400;
+
+          &>div {
+            display: flex;
+            align-items: center;
+
+            i {
+              color: #F8614D !important;
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+
+    .ant-layout-content {
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+    }
+
+    .ant-form {
+      label {
+        font-family: PingFangSC-Regular;
+        font-size: 12px !important;
+        position: relative;
+        top: 2px;
+      }
+
+      .ant-form-item-label {
+        height: 36px;
+        line-height: 36px;
+      }
+
+      .ant-select-selection--single {
+        font-size: 12px !important;
+
+        .ant-input,
+        .ant-select-selection__rendered,
+        .ant-select-dropdown,
+        .ant-select-dropdown-menu .ant-select-dropdown-menu-item {
+          font-size: 12px !important;
+
+          &::-webkit-input-placeholder {
+            font-size: 12px !important;
+          }
+        }
+      }
+
+      .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
+        background-color: fade(@primary-color, 5%);
+      }
+
+      .ant-input {
+        font-size: 12px !important;
+
+        &::-webkit-input-placeholder {
+          font-size: 12px !important;
+        }
+      }
+
+      .ant-select-selection .ant-select-selection__choice {
+        border: none;
+        height: 24px;
+        line-height: 24px;
+        margin-top: 5px;
+        padding-right: 30px;
+        background: fade(@primary-color, 5%);
+
+        .ant-select-selection__choice__remove {
+          right: 10px;
+        }
+      }
+
+      .ant-select-dropdown-menu .ant-select-dropdown-menu-item {
+        font-size: 12px;
+      }
+    }
+
+    .ant-select-selection__choice__remove {
+      right: 10px;
+    }
+  }
+}
