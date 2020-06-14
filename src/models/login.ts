@@ -2,14 +2,14 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:36:37
- * @LastEditTime: 2020-06-14 13:37:02
+ * @LastEditTime: 2020-06-14 20:35:00
  * @LastEditors: zs
  */
 import { ReduxSagaEffects, DvaSetupParams, ReduxAction } from '@ts-types/dva';
 import { LoginState } from '@ts-types/store';
 import { modelExtend } from './common';
 
-const namespace = 'app';
+const namespace = 'login';
 
 export default modelExtend<LoginState>({
   namespace,

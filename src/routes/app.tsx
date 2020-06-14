@@ -59,13 +59,9 @@ const contentStyle: CSSProperties = {
 const App: FC<Props> = ({
   children, dispatch, app, loading, location,
 }) => {
-  // const {
-  //   // menu,
-  // } = app;
   let { pathname } = location;
   pathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
 
-  // const hasPermission = menu.filter((item) => pathToRegexp(item.component || '').exec(pathname)).length;
   const { href } = window.location;
 
   if (lastHref !== href) {
@@ -75,30 +71,11 @@ const App: FC<Props> = ({
       lastHref = href;
     }
   }
-
-  // const initLoading = loading.effects['app/initialize'];
-
-  // if (openFullscreenPages.includes(pathname)) {
-  //   return (
-  //     <div>
-  //       {children}
-  //     </div>
-  //   );
-  // }
-
-  // if (openPagesOnlyHeader.includes(pathname)) {
-  //   return (
-  //     <div>
-
-  //       <Content>
-  //         {children}
-  //       </Content>
-  //     </div>
-  //   );
-  // }
+  console.log('你好');
 
   return (
     <div>
+      {children}
       <Layout>
 
         <Layout
@@ -107,7 +84,6 @@ const App: FC<Props> = ({
         >
           <BackTop target={() => document.getElementById('mainContainer')} />
 
-          <Content style={contentStyle} />
           {/* <Footer >
             {config.footerText}
           </Footer> */}

@@ -1,3 +1,10 @@
+/**
+ * @description:
+ * @author: zs
+ * @Date: 2020-06-14 12:33:34
+ * @LastEditTime: 2020-06-14 20:33:34
+ * @LastEditors: zs
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, routerRedux } from 'dva/router';
@@ -28,12 +35,12 @@ const Routers = function ({ history, app }: Props) {
   });
   const routes = [
     {
-      path: '/mini/login',
+      path: '/login',
       models: () => [import('./models/login')],
       component: () => import('./routes/login'),
     },
     // {
-    //   path: '/mini/user/center',
+    //   path: '/user/center',
     //   component: () => import('./routes/user/center'),
     // },
   ];
@@ -46,7 +53,7 @@ const Routers = function ({ history, app }: Props) {
             {
               routes.map(({ path, ...dynamics }, key) => (
                 <Route
-                  key={key}
+                  key={`${key}-${path}`}
                   exact
                   path={path}
                   component={(dynamic as Dynamic)({
@@ -62,11 +69,6 @@ const Routers = function ({ history, app }: Props) {
       </ConfigProvider>
     </ConnectedRouter>
   );
-};
-
-Routers.propTypes = {
-  history: PropTypes.object,
-  app: PropTypes.object,
 };
 
 export default Routers;
