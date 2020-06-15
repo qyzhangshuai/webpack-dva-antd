@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-13 22:40:11
+ * @LastEditTime: 2020-06-15 13:50:05
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -22,7 +22,8 @@ module.exports = env => {
     entry: path.resolve(__dirname, "../src/index.tsx"),
     output: {
       filename: '[name].bundle.js',
-      path: path.resolve(__dirname, "../dist")
+      path: path.resolve(__dirname, "../dist"),
+      publicPath: isDev ? "/" : "https://github.com/qyzhangshuai/webpack-dva-antd/dist/"
     },
     module: {
       // 转化什么文件 用什么去转，使用哪些loader
@@ -31,8 +32,7 @@ module.exports = env => {
 
       // 解析的css的时候 就不能渲染dom
       // css 可以并行和js 一同加载 mini-css-extract-plugin
-      rules: [
-        {
+      rules: [{
           test: /\.(js|jsx|ts|tsx)$/,
           loader: 'eslint-loader',
           enforce: 'pre', // 编译前检查
@@ -43,8 +43,7 @@ module.exports = env => {
           }
         },
         {
-          oneOf: [
-            { // 解析js文件 默认会调用@babel/core 
+          oneOf: [{ // 解析js文件 默认会调用@babel/core 
               test: /\.(js|jsx|ts|tsx)$/,
               use: 'babel-loader',
               exclude: /node_modules/,
@@ -76,7 +75,7 @@ module.exports = env => {
             {
               test: /\.(css|less)$/,
               exclude: /src/,
-              use: [ 
+              use: [
                 isDev ? "style-loader" : {
                   loader: MiniCssExtractPlugin.loader,
                   options: {

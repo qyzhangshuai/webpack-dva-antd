@@ -1,22 +1,16 @@
 /**
  * @description: 
  * @author: zs
- * @Date: 2020-06-11 14:48:24
- * @LastEditTime: 2020-06-11 14:48:41
+ * @Date: 2020-06-15 10:51:25
+ * @LastEditTime: 2020-06-15 10:51:25
  * @LastEditors: zs
  */
 {
   "extends": [
-    // "airbnb-typescript",
-    "eslint:recommended",
+    "airbnb-typescript",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended"
-
-    // "eslint:recommended",
-		// "plugin:react/recommended",
-		// "plugin:@typescript-eslint/eslint-recommended",
-		// "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     // 禁止使用 var
@@ -30,10 +24,13 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "react/prop-types": "off",
+    "react/prop-types": "off", // 有些属性没有传递给组件，会报错
     "no-debugger": 0,
-    // "no-console": 0,
-    "@typescript-eslint/no-unused-vars": "off"
+    "@typescript-eslint/no-unused-vars":0, // 没有使用的变量
+    "react/no-array-index-key": 0, // map时不能用index作为key
+    "func-names": 0, // 函数没有名字， const fn = function(){}
+    "import/no-extraneous-dependencies":0, // 没有依赖项，有的没有依赖项，比如本项目中的react-redux
+    "no-console":0 
   },
   "settings": {
     "react": {

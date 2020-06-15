@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{"./src/routes/login/index.tsx":function(n,e,t){"use strict";t.r(e);var o=t("./node_modules/_react@16.13.1@react/index.js"),i=t.n(o);e.default=function(){return i.a.createElement("div",null,"login")}}}]);

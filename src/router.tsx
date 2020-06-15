@@ -2,11 +2,10 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:33:34
- * @LastEditTime: 2020-06-14 20:33:34
+ * @LastEditTime: 2020-06-15 11:21:55
  * @LastEditors: zs
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Switch, Route, routerRedux } from 'dva/router';
 import dynamic from 'dva/dynamic';
 import { ConfigProvider } from 'antd';

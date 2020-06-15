@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 20:11:15
- * @LastEditTime: 2020-06-13 20:27:56
+ * @LastEditTime: 2020-06-15 13:37:22
  * @LastEditors: zs
  */
 
@@ -17,7 +17,7 @@ const app = dva({
   ...createLoading({
     effects: true,
   }),
-  history: createBrowserHistory(),
+  // history: createBrowserHistory(),
   onError (error: Error) {
     message.error(`dva报错: ${error.message}`)
   },
