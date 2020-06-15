@@ -1,10 +1,16 @@
+/**
+ * @description:
+ * @author: zs
+ * @Date: 2020-06-15 10:06:49
+ * @LastEditTime: 2020-06-15 14:14:12
+ * @LastEditors: zs
+ */
 /* global window */
 /* global document */
 import React, {
   FC, ReactNode, CSSProperties, useEffect,
 } from 'react';
 import NProgress from 'nprogress';
-import PropTypes from 'prop-types';
 import pathToRegexp from 'path-to-regexp';
 import { MapStateToProps } from 'react-redux';
 import { connect } from 'dva';
@@ -48,14 +54,6 @@ const { Content } = Layout;
 
 let lastHref;
 
-const contentStyle: CSSProperties = {
-  position: 'relative',
-  overflowX: 'hidden',
-  overflowY: 'auto',
-  zIndex: 100,
-  padding: 0,
-};
-
 const App: FC<Props> = ({
   children, dispatch, app, loading, location,
 }) => {
@@ -71,24 +69,11 @@ const App: FC<Props> = ({
       lastHref = href;
     }
   }
-  console.log('你好');
 
   return (
     <div>
       {children}
-      <Layout>
 
-        <Layout
-          style={{ height: '100vh', overflow: 'hidden' }}
-          id="mainContainer"
-        >
-          <BackTop target={() => document.getElementById('mainContainer')} />
-
-          {/* <Footer >
-            {config.footerText}
-          </Footer> */}
-        </Layout>
-      </Layout>
     </div>
   );
 };
