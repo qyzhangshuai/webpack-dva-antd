@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-15 13:58:20
+ * @LastEditTime: 2020-06-15 14:00:17
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -23,7 +23,7 @@ module.exports = env => {
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, "../dist"),
-      publicPath: isDev ? "/" : "https://github.com/qyzhangshuai/webpack-dva-antd/tree/master/dist/"
+      publicPath: isDev ? "/" : "/"
     },
     module: {
       // 转化什么文件 用什么去转，使用哪些loader
