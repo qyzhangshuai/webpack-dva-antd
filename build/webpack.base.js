@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-13 22:40:11
+ * @LastEditTime: 2020-06-25 17:32:00
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -15,6 +15,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const PurgeCssWebpackPlugin = require('purgecss-webpack-plugin');
 const glob = require('glob'); // 主要功能就是查找匹配的文件
 const webpack = require('webpack')
+
+const thems = require('../theme.config') // 配置主题
+
 module.exports = env => {
   // env 是环境变量
   let isDev = env.development;
@@ -22,7 +25,8 @@ module.exports = env => {
     entry: path.resolve(__dirname, "../src/index.tsx"),
     output: {
       filename: '[name].bundle.js',
-      path: path.resolve(__dirname, "../dist")
+      path: path.resolve(__dirname, "../dist"),
+      publicPath: "/"
     },
     module: {
       // 转化什么文件 用什么去转，使用哪些loader
@@ -50,8 +54,11 @@ module.exports = env => {
               exclude: /node_modules/,
             },
             {
-              test: /\.(css|less)$/,
-              exclude: /(node_modules)/,
+              test: /\.(less|css)$/,
+              exclude: [//排除这两个文件夹下面的css文件, 对node_modules,src/common目录下面的css文件以全局方式引用，应用到页面
+                path.resolve(__dirname, '../node_modules'),
+                // path.resolve(__dirname, '../src/themes')
+              ],
               use: [ // 是不是开发环境 如果是就用style-loader
                 isDev ? "style-loader" : {
                   loader: MiniCssExtractPlugin.loader,
@@ -70,13 +77,21 @@ module.exports = env => {
                   }
                 },
                 "postcss-loader",
-                "less-loader"
+                {
+                  loader: "less-loader",
+                  options: {
+                    lessOptions: { // 如果使用less-loader@5，请移除 lessOptions 这一级直接配置选项。配置antd主题
+                      modifyVars: thems(),
+                      javascriptEnabled: true,
+                    },
+                  }
+                }
               ]
             },
             {
-              test: /\.(css|less)$/,
+              test: /\.(less|css)$/,
               exclude: /src/,
-              use: [ 
+              use: [
                 isDev ? "style-loader" : {
                   loader: MiniCssExtractPlugin.loader,
                   options: {
@@ -90,7 +105,15 @@ module.exports = env => {
                   }
                 },
                 "postcss-loader",
-                "less-loader"
+                {
+                  loader: "less-loader",
+                  options: {
+                    lessOptions: {
+                      modifyVars: thems(),
+                      javascriptEnabled: true,
+                    }
+                  }
+                }
               ]
             },
 

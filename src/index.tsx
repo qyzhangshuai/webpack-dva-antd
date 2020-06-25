@@ -1,8 +1,8 @@
 /**
- * @description: 
+ * @description:
  * @author: zs
  * @Date: 2020-06-10 20:11:15
- * @LastEditTime: 2020-06-13 20:27:56
+ * @LastEditTime: 2020-06-25 17:40:17
  * @LastEditors: zs
  */
 
@@ -11,19 +11,18 @@ import dva from 'dva'
 import createLoading from 'dva-loading'
 import { createBrowserHistory } from 'history'
 import { RootState } from '@ts-types/store';
-
 // 1. Initialize
 const app = dva({
   ...createLoading({
     effects: true,
   }),
   history: createBrowserHistory(),
-  onError (error: Error) {
+  onError(error: Error) {
     message.error(`dva报错: ${error.message}`)
   },
   onStateChange(state: RootState) {
     window.__state = state
-  }
+  },
 })
 
 window.__app = app;
@@ -36,3 +35,8 @@ app.router(require('./router').default)
 
 // 4. Start
 app.start('#root')
+
+if (module.hot) { // 如果支持热更新
+  module.hot.accept(); // 当入口文件变化后重新执行当前入口文件
+  
+}

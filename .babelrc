@@ -11,8 +11,8 @@
     [
       "import", {
         "libraryName": "antd",
-        "libraryDirectory": "es",
-        "style": "css"
+        "libraryDirectory": "lib",
+        "style": true
       }
     ],
     ["@babel/plugin-proposal-decorators", {

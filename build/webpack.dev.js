@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-13 23:17:55
+ * @LastEditTime: 2020-06-25 18:04:26
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -15,6 +15,7 @@ const mockData = require('../mock.config.js');
 
 const host = '127.0.0.1';
 const port = '4000';
+
 module.exports = {
 	mode: 'development',
 	devtool: 'eval-cheap-module-souce-map',
@@ -36,6 +37,7 @@ module.exports = {
 	devServer: { // 开发服务的配置 
 		host,
 		port,
+		open: true,
 		compress: true,// gzip 可以提升返回页面的速度
 		watchContentBase: true, // 监视 contentBase 目录下的所有文件，一旦文件变化就会 reload
 		contentBase: path.resolve(__dirname, '../dist'), // webpack启动服务会在dist目录下
@@ -45,7 +47,7 @@ module.exports = {
 			errors: true
 		},
 		hot: true,
-		historyApiFallback: true,
+		historyApiFallback: true, // 在devServer里面有个historyApiFallback的属性，是用于如果找不到界面就返回默认首页，上线时需要使用nginx
 
 		proxy: {
 			// 一旦devServer(5000)服务器接受到 /api/xxx 的请求，就会把请求转发到另外一个服务器(3000)

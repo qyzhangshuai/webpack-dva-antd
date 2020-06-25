@@ -17,7 +17,7 @@ import { RootState } from '@ts-types/store';
 import { Dispatch } from '@ts-types/dva';
 // import { logout } from '@utils';
 import Error from './error';
-// import '../../themes/index.less';
+import '../themes/index.less';
 import './app.less';
 
 interface DispatchProps {
@@ -74,7 +74,7 @@ const App: FC<Props> = ({
   console.log('你好');
 
   return (
-    <div>
+    <div className="app123456">
       {children}
       <Layout>
 
