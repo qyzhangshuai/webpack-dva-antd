@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-25 17:32:00
+ * @LastEditTime: 2020-06-25 18:16:51
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -26,7 +26,7 @@ module.exports = env => {
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, "../dist"),
-      publicPath: "/"
+      publicPath: isDev ? "/" : "/"
     },
     module: {
       // 转化什么文件 用什么去转，使用哪些loader
@@ -35,8 +35,7 @@ module.exports = env => {
 
       // 解析的css的时候 就不能渲染dom
       // css 可以并行和js 一同加载 mini-css-extract-plugin
-      rules: [
-        {
+      rules: [{
           test: /\.(js|jsx|ts|tsx)$/,
           loader: 'eslint-loader',
           enforce: 'pre', // 编译前检查
@@ -47,8 +46,7 @@ module.exports = env => {
           }
         },
         {
-          oneOf: [
-            { // 解析js文件 默认会调用@babel/core 
+          oneOf: [{ // 解析js文件 默认会调用@babel/core 
               test: /\.(js|jsx|ts|tsx)$/,
               use: 'babel-loader',
               exclude: /node_modules/,

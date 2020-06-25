@@ -2,13 +2,12 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-25 18:04:26
+ * @LastEditTime: 2020-06-25 18:17:23
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
 // const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const path = require('path');
-const apiMocker = require('mocker-api')
 const fs = require('fs')
 const { mockApiToApp } = require('mockjs-server-cli');
 const mockData = require('../mock.config.js');
@@ -41,11 +40,11 @@ module.exports = {
 		compress: true,// gzip 可以提升返回页面的速度
 		watchContentBase: true, // 监视 contentBase 目录下的所有文件，一旦文件变化就会 reload
 		contentBase: path.resolve(__dirname, '../dist'), // webpack启动服务会在dist目录下
-		// overlay: false,
-		overlay: {
-			warnings: true,
-			errors: true
-		},
+		overlay: false,
+		// overlay: {
+		// 	warnings: true,
+		// 	errors: true
+		// },
 		hot: true,
 		historyApiFallback: true, // 在devServer里面有个historyApiFallback的属性，是用于如果找不到界面就返回默认首页，上线时需要使用nginx
 

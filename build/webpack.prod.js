@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-25 14:54:04
+ * @LastEditTime: 2020-06-25 18:18:29
  * @LastEditors: zs
  */
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
