@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-15 10:06:49
- * @LastEditTime: 2020-06-15 14:14:12
+ * @LastEditTime: 2020-06-25 19:19:03
  * @LastEditors: zs
  */
 /* global window */
@@ -23,9 +23,10 @@ import { RootState } from '@ts-types/store';
 import { Dispatch } from '@ts-types/dva';
 // import { logout } from '@utils';
 import Error from './error';
-import '../themes/index.less';
+import styles from '../themes/index.less';
 import './app.less';
 
+console.log('styles1', styles)
 interface DispatchProps {
   dispatch: Dispatch
 }

@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-13 20:20:53
- * @LastEditTime: 2020-06-14 13:39:56
+ * @LastEditTime: 2020-06-25 20:36:39
  * @LastEditors: zs
  */
 
@@ -21,5 +21,5 @@ export {
   RootState,
   AppState,
   LoadingState,
-  LoginState
+  LoginState,
 }

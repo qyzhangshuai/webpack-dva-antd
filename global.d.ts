@@ -2,7 +2,7 @@
  * @description: 全局配置
  * @author: zs
  * @Date: 2020-06-11 16:43:01
- * @LastEditTime: 2020-06-25 12:34:09
+ * @LastEditTime: 2020-06-25 19:05:35
  * @LastEditors: zs
  */
 declare module '*.css' {

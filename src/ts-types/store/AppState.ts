@@ -2,10 +2,10 @@
  * @description: 全局 state
  * @author: zs
  * @Date: 2020-06-13 20:23:38
- * @LastEditTime: 2020-06-13 20:38:36
+ * @LastEditTime: 2020-06-25 20:39:15
  * @LastEditors: zs
  */
-export type MenuItem = {
+export interface MenuItem {
 	id: number
 	icon?: string
 	name: string
@@ -13,7 +13,7 @@ export type MenuItem = {
 	pid?: number
 }
 
-export type User = {
+export interface User {
 	id: number
 	username: string
 	nickname: string
@@ -21,7 +21,7 @@ export type User = {
 	[props: string]: any
 }
 
-type AppState = {
+interface AppState {
 	// user: Partial<User>
 	// menu: MenuItem[]
 	// defaultMenu: Partial<MenuItem>

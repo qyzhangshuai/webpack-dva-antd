@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-10 20:11:15
- * @LastEditTime: 2020-06-25 18:18:36
+ * @LastEditTime: 2020-06-25 18:59:22
  * @LastEditors: zs
  */
 
@@ -36,7 +36,3 @@ app.router(require('./router').default)
 // 4. Start
 app.start('#root')
 
-if (module.hot) { // 如果支持热更新
-  module.hot.accept(); // 当入口文件变化后重新执行当前入口文件
-  
-}

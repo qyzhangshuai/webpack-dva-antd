@@ -6,7 +6,7 @@
  * @LastEditors: zs
  */
 
-type Loading = {
+interface Loading {
 	global: boolean;
 	effects: {
 		[effect: string]: boolean;

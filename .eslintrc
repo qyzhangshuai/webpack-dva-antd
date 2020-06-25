@@ -20,9 +20,11 @@
     "react/no-array-index-key": "off", // 数组不能使用index作为key
     "@typescript-eslint/no-unused-vars": "off", // 没有使用的变量
     "no-console": "off", // console关掉
-    "linebreak-style":"off", // 换行风格-> window和mac不同
+    "linebreak-style": "off", // 换行风格-> window和mac不同
     "@typescript-eslint/no-var-requires": "off", // 可以使用request，不用报错了
-    "@typescript-eslint/semi": "off" // 结束分号可以不用带
+    "@typescript-eslint/semi": "off", // 结束分号可以不用带
+    "@typescript-eslint/indent": "off", // tab键不能使用，必须换成两个空格，所以禁掉
+    "no-tabs": "off"
   },
   "settings": {
     "react": {

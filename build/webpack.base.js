@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-25 18:16:51
+ * @LastEditTime: 2020-06-25 18:49:38
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -35,7 +35,8 @@ module.exports = env => {
 
       // 解析的css的时候 就不能渲染dom
       // css 可以并行和js 一同加载 mini-css-extract-plugin
-      rules: [{
+      rules: [
+        {
           test: /\.(js|jsx|ts|tsx)$/,
           loader: 'eslint-loader',
           enforce: 'pre', // 编译前检查
@@ -46,17 +47,15 @@ module.exports = env => {
           }
         },
         {
-          oneOf: [{ // 解析js文件 默认会调用@babel/core 
+          oneOf: [
+            { // 解析js文件 默认会调用@babel/core 
               test: /\.(js|jsx|ts|tsx)$/,
               use: 'babel-loader',
               exclude: /node_modules/,
             },
             {
               test: /\.(less|css)$/,
-              exclude: [//排除这两个文件夹下面的css文件, 对node_modules,src/common目录下面的css文件以全局方式引用，应用到页面
-                path.resolve(__dirname, '../node_modules'),
-                // path.resolve(__dirname, '../src/themes')
-              ],
+              exclude: /node_modules/, // 对除了node_modules外的文件进行模块化
               use: [ // 是不是开发环境 如果是就用style-loader
                 isDev ? "style-loader" : {
                   loader: MiniCssExtractPlugin.loader,
@@ -70,7 +69,9 @@ module.exports = env => {
                     // 给loader传递参数
                     // 如果css文件引入其他文件@import
                     importLoaders: 2,
-                    modules: true, // css模块化
+                    modules: {
+                      localIdentName: '[name]__[local]_[hash:base64:5]',
+                    }, // css模块化
                     // sourceMap: true
                   }
                 },
@@ -80,7 +81,7 @@ module.exports = env => {
                   options: {
                     lessOptions: { // 如果使用less-loader@5，请移除 lessOptions 这一级直接配置选项。配置antd主题
                       modifyVars: thems(),
-                      javascriptEnabled: true,
+                      javascriptEnabled: true, // 开启配置主题
                     },
                   }
                 }
@@ -88,7 +89,7 @@ module.exports = env => {
             },
             {
               test: /\.(less|css)$/,
-              exclude: /src/,
+              exclude: /src/, // 这是为了antd的，不让antd进行模块化
               use: [
                 isDev ? "style-loader" : {
                   loader: MiniCssExtractPlugin.loader,
@@ -128,7 +129,8 @@ module.exports = env => {
                   name: "image/[contentHash].[ext]",
                   limit: 1024
                 }
-              } // file-loader 默认的功能是拷贝的作用
+              }
+              // file-loader 默认的功能是拷贝的作用
               // 我希望当前比较小的图片可以转化成 base64 比以前大，好处就是不用发送http请求
             }
           ]
