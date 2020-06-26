@@ -1,17 +1,17 @@
 /**
  * @description:
  * @author: zs
- * @Date: 2020-06-15 10:06:49
- * @LastEditTime: 2020-06-26 17:14:37
+ * @Date: 2020-06-14 12:52:45
+ * @LastEditTime: 2020-06-27 00:31:14
  * @LastEditors: zs
  */
 /* global window */
 /* global document */
 import React, {
-  FC, ReactNode, CSSProperties, useEffect,
+ FC, ReactNode, CSSProperties, useEffect, useMemo,
 } from 'react';
 import NProgress from 'nprogress';
-import pathToRegexp from 'path-to-regexp';
+import { pathToRegexp } from 'path-to-regexp';
 import { MapStateToProps } from 'react-redux';
 import { connect } from 'dva';
 import { Loader, MyLayout } from '@components';
@@ -21,28 +21,28 @@ import classnames from 'classnames';
 import { withRouter } from 'dva/router';
 import { RootState } from '@ts-types/store';
 import { Dispatch } from '@ts-types/dva';
-import { ENV } from '@config'
+import * as config from '@config';
 // import { logout } from '@utils';
 import Error from './error';
-import styles from '../themes/index.less';
-import './app.less';
+import '../themes/index.less';
+import styles from './app.less';
 
-console.log('config', ENV);
+console.log('styles', styles);
 interface DispatchProps {
-  dispatch: Dispatch
+  dispatch: Dispatch;
 }
 
 interface StateProps {
-  app: RootState['app']
-  loading: RootState['loading']
+  app: RootState['app'];
+  loading: RootState['loading'];
 }
 
 interface RouterProps {
-  location: Location
+  location: Location;
 }
 
 interface OwnProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 type Props = StateProps & DispatchProps & OwnProps & RouterProps;
@@ -50,20 +50,33 @@ type Props = StateProps & DispatchProps & OwnProps & RouterProps;
 // #----------- 上: ts类型定义 ----------- 分割线 ----------- 下: JS代码 -----------
 
 const { Content } = Layout;
-// const {
-//   prefix, openPages, openFullscreenPages, openPagesOnlyHeader,
-// } = config;
+const { Header } = MyLayout;
+
+const {
+ prefix, openPages, openFullscreenPages, openPagesOnlyHeader,
+} = config;
 
 let lastHref;
 
 const App: FC<Props> = ({
-  children, dispatch, app, loading, location,
+ children, dispatch, app, loading, location,
 }) => {
+  const {
+    user,
+    menu,
+    siderFold,
+    isNavbar,
+    menuPopoverVisible,
+    navOpenKeys,
+  } = useMemo(() => app, [app]);
+
   let { pathname } = location;
   pathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  // pathToRegexp("").test("/") => true
+  // 表示只要component为空，那么就代表有权限
+  const hasPermission = menu.filter((item) => pathToRegexp(item.component || '').test(pathname)).length;
 
   const { href } = window.location;
-
   if (lastHref !== href) {
     NProgress.start();
     if (!loading.global) {
@@ -72,12 +85,70 @@ const App: FC<Props> = ({
     }
   }
 
-  return (
-    <div className="app123456">
-      {children}
+  const headerProps = {
+    menu,
+    user,
+    location,
+    isNavbar, // popOver的时候
+    navOpenKeys,
+    menuPopoverVisible, // popOver的显示于隐藏
+    // 左侧菜单显不显示
+    switchMenuPopover() {
+      dispatch({ type: 'app/switchMenuPopver' });
+    },
+    // 头部的右侧的登出和设置密码
+    onClickMenu({ key }) {
+      switch (key) {
+        case 'logout':
+          // logout({ userId: user.id });
+          break;
+        case 'usercenter':
+          dispatch({
+            type: 'app/routerToPage',
+            payload: '/mini/user/center',
+          });
+          break;
 
-    </div>
-  );
+        default:
+          break;
+      }
+    },
+    siderFold, // 菜单折叠
+    // 左右折叠
+    switchSider() {
+      dispatch({ type: 'app/switchSider' });
+    },
+    // 菜单的打开
+    changeOpenKeys(openKeys: string[]) {
+      dispatch({
+        type: 'app/handleNavOpenKeys',
+        payload: { navOpenKeys: openKeys },
+      });
+    },
+  };
+
+  const initLoading = loading.effects['app/initialize'];
+
+  if (openFullscreenPages.includes(pathname)) {
+    return (
+      <div>
+        <Loader fullScreen spinning={initLoading} />
+        {children}
+      </div>
+    );
+  }
+
+  if (openPagesOnlyHeader.includes(pathname)) {
+    return (
+      <div>
+        <Loader fullScreen spinning={initLoading} />
+        <Header {...headerProps} noBar />
+        <Content>{children}</Content>
+      </div>
+    );
+  }
+  console.log('12');
+  return <div className={styles.app}>{children}</div>;
 };
 
 const mapStateToProps: MapStateToProps<StateProps, OwnProps, RootState> = ({

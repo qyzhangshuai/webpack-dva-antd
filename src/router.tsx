@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:33:34
- * @LastEditTime: 2020-06-25 18:18:45
+ * @LastEditTime: 2020-06-27 00:12:26
  * @LastEditors: zs
  */
 import React from 'react';
@@ -38,10 +38,10 @@ const Routers = function ({ history, app }: Props) {
       models: () => [import('./models/login')],
       component: () => import('./routes/login'),
     },
-    // {
-    //   path: '/user/center',
-    //   component: () => import('./routes/user/center'),
-    // },
+    {
+      path: '/logout',
+      component: () => import('./routes/logout'),
+    },
   ];
 
   return (

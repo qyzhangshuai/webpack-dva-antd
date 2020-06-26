@@ -2,13 +2,14 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-25 19:01:09
+ * @LastEditTime: 2020-06-26 17:44:06
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
 // const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const path = require('path');
 const fs = require('fs')
+const webpack = require('webpack')
 const { mockApiToApp } = require('mockjs-server-cli');
 const mockData = require('../mock.config.js');
 
@@ -32,6 +33,9 @@ module.exports = {
 		// new AddAssetHtmlPlugin({
 		// 	filepath: path.resolve(__dirname, '../dll/react.dll.js')
 		// }),
+
+		// 设置热更新
+		new webpack.HotModuleReplacementPlugin(),
 	],
 	devServer: { // 开发服务的配置 
 		host,
