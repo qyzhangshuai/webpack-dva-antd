@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-25 18:49:38
+ * @LastEditTime: 2020-06-26 17:19:37
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -17,16 +17,40 @@ const glob = require('glob'); // 主要功能就是查找匹配的文件
 const webpack = require('webpack')
 
 const thems = require('../theme.config') // 配置主题
+const VERSION = require('../version')
+
+const ENV = process.env.ENV;
+
+let publicPath = '';
+let isDev = false
+switch (ENV) {
+  case 'production':
+  case 'pre':
+    isDev = false
+    publicPath = '/'
+    break;
+  case 'test':
+    isDev = false
+    publicPath = 'CDN';
+    break;
+  case 'development':
+    isDev = true
+    publicPath = '/';
+    break;
+  default:
+    break;
+}
+
 
 module.exports = env => {
   // env 是环境变量
-  let isDev = env.development;
+  // let isDev = env.development;
   const base = {
     entry: path.resolve(__dirname, "../src/index.tsx"),
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, "../dist"),
-      publicPath: isDev ? "/" : "/"
+      publicPath: publicPath
     },
     module: {
       // 转化什么文件 用什么去转，使用哪些loader
@@ -52,6 +76,7 @@ module.exports = env => {
               test: /\.(js|jsx|ts|tsx)$/,
               use: 'babel-loader',
               exclude: /node_modules/,
+
             },
             {
               test: /\.(less|css)$/,
@@ -139,7 +164,17 @@ module.exports = env => {
     },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, "../src/")
+        '@components': `${__dirname}/../src/components`,
+        '@models': `${__dirname}/../src/models`,
+        '@services': `${__dirname}/../src/services`,
+        '@config': `${__dirname}/../src/config`,
+        '@constant': `${__dirname}/../src/constant`,
+        '@routes': `${__dirname}/../src/routes`,
+        '@utils': `${__dirname}/../src/utils`,
+        '@hooks': `${__dirname}/../src/hooks`,
+        '@ts-types': `${__dirname}/../src/ts-types`,
+        '@enums': `${__dirname}/../src/utils/enums`,
+        'themes': `${__dirname}/../src/themes`,
       },
       extensions: ['.tsx', '.ts', ".js", '.jsx'],
     },
@@ -163,7 +198,13 @@ module.exports = env => {
       //     nodir: true
       //   })
       // }),
+      // 这个插件是用来定义全局变量的
+      new webpack.DefinePlugin({
+        'process.env.ENV': JSON.stringify(ENV),
+        'process.env.VERSION': JSON.stringify(VERSION),
+      }),
       new webpack.NamedModulesPlugin(),
+
     ].filter(Boolean)
   };
   // 函数要返回配置文件，没返回会采用默认配置

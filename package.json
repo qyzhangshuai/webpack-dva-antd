@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --env.production --config ./build/webpack.base",
-    "dev": "cross-env XM=12 webpack-dev-server --env.development --config ./build/webpack.base",
+    "build": "webpack ENV=production  --config ./build/webpack.base",
+    "dev": "cross-env ENV=development webpack-dev-server  --config ./build/webpack.base",
     "start": "npm run dev",
-    "dev:build": "webpack --env.development --config ./build/webpack.base",
-    "dll": "webpack --config ./build/webpack.dll.js",
+    "dev:build": "cross-env ENV=development webpack --config ./build/webpack.base",
     "lint": "eslint --fix --ext .ts,.tsx src",
     "mock": "mockjs-server --port=9000 --delay=100-1000"
   },

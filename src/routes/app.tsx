@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-15 10:06:49
- * @LastEditTime: 2020-06-25 19:19:03
+ * @LastEditTime: 2020-06-26 17:14:37
  * @LastEditors: zs
  */
 /* global window */
@@ -17,16 +17,17 @@ import { connect } from 'dva';
 import { Loader, MyLayout } from '@components';
 import { BackTop, Layout } from 'antd';
 import classnames from 'classnames';
-// import * as config from '@config';
+// import { ENV } from '@config';
 import { withRouter } from 'dva/router';
 import { RootState } from '@ts-types/store';
 import { Dispatch } from '@ts-types/dva';
+import { ENV } from '@config'
 // import { logout } from '@utils';
 import Error from './error';
 import styles from '../themes/index.less';
 import './app.less';
 
-console.log('styles1', styles)
+console.log('config', ENV);
 interface DispatchProps {
   dispatch: Dispatch
 }

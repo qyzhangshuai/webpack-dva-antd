@@ -1,5 +1,5 @@
 /**
- * @description: 
+ * @description:
  * @author: zs
  * @Date: 2020-06-13 21:11:59
  * @LastEditTime: 2020-06-13 21:15:38
@@ -9,7 +9,7 @@
 let mockApiPrefix = '/api/v1'
 
 let apiPrefix;
-let exportPrefix; //导出excel
+let exportPrefix; // 导出excel
 
 switch (process.env.ENV) {
   case 'production':
