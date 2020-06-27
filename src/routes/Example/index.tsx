@@ -2,7 +2,7 @@
  * @description: Example
  * @author: zs
  * @Date: 2020-06-27 17:52:50
- * @LastEditTime: 2020-06-27 17:59:59
+ * @LastEditTime: 2020-06-27 19:02:59
  * @LastEditors: zs
  */
 import React from 'react'
@@ -20,7 +20,75 @@ const Example: React.SFC<ExampleProps> = ({
   dispatch,
 }) => {
   console.log('11')
-  return <div>example</div>
+
+  return (
+    <div style={{ overflow: 'auto', height: '100%' }}>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+      <div>example</div>
+    </div>
+  )
 }
 
 const mapStateToProps = ({ loading }: RootState) => ({

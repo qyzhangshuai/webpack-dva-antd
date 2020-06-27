@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:52:45
- * @LastEditTime: 2020-06-27 18:23:52
+ * @LastEditTime: 2020-06-27 19:03:46
  * @LastEditors: zs
  */
 /* global window */
@@ -15,7 +15,7 @@ import { pathToRegexp } from 'path-to-regexp';
 import { MapStateToProps } from 'react-redux';
 import { connect } from 'dva';
 import { Loader, MyLayout } from '@components';
-import { BackTop, Layout } from 'antd';
+import { Layout } from 'antd';
 import classnames from 'classnames';
 import { withRouter } from 'dva/router';
 import { RootState } from '@ts-types/store';
@@ -148,17 +148,16 @@ const App: FC<Props> = ({
   }
 
   return (
-    <div className={styles.app}>
+    <div>
       <Loader fullScreen spinning={initLoading} />
       {/* <Layout className={classnames({ [styles.dark]: darkTheme, [styles.light]: !darkTheme })}> */}
       <Layout>
         {/* {!isNavbar && <MyLayout.Sider {...siderProps} />} */}
 
         <Layout
-          className={styles.app}
+          style={{ height: '100vh', overflow: 'hidden' }}
           id="mainContainer"
         >
-          <BackTop target={() => document.getElementById('mainContainer')} />
           <Header {...headerProps} />
           <Content>
             {
