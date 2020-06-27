@@ -2,13 +2,13 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:52:45
- * @LastEditTime: 2020-06-27 00:31:14
+ * @LastEditTime: 2020-06-27 18:23:52
  * @LastEditors: zs
  */
 /* global window */
 /* global document */
 import React, {
- FC, ReactNode, CSSProperties, useEffect, useMemo,
+  FC, ReactNode, CSSProperties, useEffect, useMemo,
 } from 'react';
 import NProgress from 'nprogress';
 import { pathToRegexp } from 'path-to-regexp';
@@ -17,12 +17,11 @@ import { connect } from 'dva';
 import { Loader, MyLayout } from '@components';
 import { BackTop, Layout } from 'antd';
 import classnames from 'classnames';
-// import { ENV } from '@config';
 import { withRouter } from 'dva/router';
 import { RootState } from '@ts-types/store';
 import { Dispatch } from '@ts-types/dva';
 import * as config from '@config';
-// import { logout } from '@utils';
+import logout from '@utils/logout';
 import Error from './error';
 import '../themes/index.less';
 import styles from './app.less';
@@ -53,13 +52,13 @@ const { Content } = Layout;
 const { Header } = MyLayout;
 
 const {
- prefix, openPages, openFullscreenPages, openPagesOnlyHeader,
+  prefix, openPages, openFullscreenPages, openPagesOnlyHeader,
 } = config;
 
 let lastHref;
 
 const App: FC<Props> = ({
- children, dispatch, app, loading, location,
+  children, dispatch, app, loading, location,
 }) => {
   const {
     user,
@@ -100,7 +99,7 @@ const App: FC<Props> = ({
     onClickMenu({ key }) {
       switch (key) {
         case 'logout':
-          // logout({ userId: user.id });
+          logout();
           break;
         case 'usercenter':
           dispatch({
@@ -127,11 +126,11 @@ const App: FC<Props> = ({
     },
   };
 
-  const initLoading = loading.effects['app/initialize'];
+  const initLoading = useMemo(() => loading.effects['app/initialize'], [loading]);
 
   if (openFullscreenPages.includes(pathname)) {
     return (
-      <div>
+      <div className={styles.app}>
         <Loader fullScreen spinning={initLoading} />
         {children}
       </div>
@@ -140,15 +139,46 @@ const App: FC<Props> = ({
 
   if (openPagesOnlyHeader.includes(pathname)) {
     return (
-      <div>
+      <div style={{ height: '100vh', overflow: 'hidden' }}>
         <Loader fullScreen spinning={initLoading} />
         <Header {...headerProps} noBar />
-        <Content>{children}</Content>
+        <Content style={{ height: '100%' }}>{children}</Content>
       </div>
     );
   }
-  console.log('12');
-  return <div className={styles.app}>{children}</div>;
+
+  return (
+    <div className={styles.app}>
+      <Loader fullScreen spinning={initLoading} />
+      {/* <Layout className={classnames({ [styles.dark]: darkTheme, [styles.light]: !darkTheme })}> */}
+      <Layout>
+        {/* {!isNavbar && <MyLayout.Sider {...siderProps} />} */}
+
+        <Layout
+          className={styles.app}
+          id="mainContainer"
+        >
+          <BackTop target={() => document.getElementById('mainContainer')} />
+          <Header {...headerProps} />
+          <Content>
+            {
+              hasPermission || (user.id && openPages.includes(pathname))
+                ? children
+                : (
+                  // 用户信息未请求成功时，先显示 loading
+                  initLoading
+                    ? null
+                    : <Error />
+                )
+            }
+          </Content>
+          {/* <Footer >
+            {config.footerText}
+          </Footer> */}
+        </Layout>
+      </Layout>
+    </div>
+  )
 };
 
 const mapStateToProps: MapStateToProps<StateProps, OwnProps, RootState> = ({

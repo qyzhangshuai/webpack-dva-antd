@@ -1,14 +1,13 @@
-
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import cloneDeep from 'lodash/cloneDeep'
 import { message } from 'antd'
-import storage from './storage'
 import { prefix } from '@config';
-import { RequestResponse,DefaultOptions } from '@ts-types'
+import { RequestResponse, DefaultOptions } from '@ts-types'
+import storage from './storage'
 
 const defaultHeaders = {
   'X-Requested-With': 'XMLHttpRequest',
-  'Accept': 'application/json',
+  Accept: 'application/json',
   'Content-Type': 'application/json; charset=utf-8',
 }
 
@@ -52,7 +51,7 @@ export default function request(url: string, options: AxiosRequestConfig = {}): 
   const token = storage.getItem(`${prefix}-token`);
   if (token) {
     options.headers = {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       ...options.headers,
     }
   }
@@ -68,7 +67,7 @@ export default function request(url: string, options: AxiosRequestConfig = {}): 
           success: true,
           message: statusText,
           statusCode: status,
-          data
+          data,
         })
       }
 
@@ -89,7 +88,7 @@ export default function request(url: string, options: AxiosRequestConfig = {}): 
       if (!(options as any).noErrorTip) {
         tipError(response || {
           ...error,
-          status: 600
+          status: 600,
         })
       }
 

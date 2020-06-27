@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import PropTypes from 'prop-types'
 import { Menu, Popover, Layout } from 'antd'
 import { UnorderedListOutlined, AppstoreOutlined, DownOutlined } from '@ant-design/icons'
 import styles from './Header.less'
@@ -55,11 +54,12 @@ const Header: FC<Props> = ({
     navOpenKeys,
     changeOpenKeys,
   }
+
   return (
     <Layout.Header className={styles.header}>
       {
         noBar
-          ? <span />
+          ? null
           : (
             isNavbar
               ? (
@@ -80,7 +80,7 @@ const Header: FC<Props> = ({
           )
       }
       <div className={styles.header_logo}>
-        <img src="https://minih5.91lda.com//mini/mini-houtai-header-logo-text.png" alt="" />
+        <img src="https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=388611016,4041755354&fm=26&gp=0.jpg" alt="" />
       </div>
       <div className={styles.rightWarpper}>
         <Menu mode="horizontal" onClick={onClickMenu}>
@@ -88,7 +88,6 @@ const Header: FC<Props> = ({
             popupClassName={styles.submenu}
             title={(
               <p className={styles.header_userinfo}>
-                {/* <Icon type="user" /> */}
                 <span className={styles.header_userinfo_icon} />
                 <span className={styles.header_userinfo_name}>{user.username}</span>
                 <DownOutlined />

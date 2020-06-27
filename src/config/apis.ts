@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-13 21:11:59
- * @LastEditTime: 2020-06-13 21:15:38
+ * @LastEditTime: 2020-06-27 15:36:05
  * @LastEditors: zs
  */
 
@@ -37,6 +37,6 @@ export default {
   mockApiPrefix,
   CORS: [],
   login: `${apiPrefix}/development/auth/login`,
-  logout: `${apiPrefix}/user/logout`,
+  logout: `${apiPrefix}/usercenter`,
 
 }

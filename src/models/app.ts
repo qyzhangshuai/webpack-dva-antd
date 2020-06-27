@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:33:34
- * @LastEditTime: 2020-06-27 00:14:02
+ * @LastEditTime: 2020-06-27 18:16:55
  * @LastEditors: zs
  */
 import { ReduxSagaEffects, DvaSetupParams, ReduxAction } from '@ts-types/dva';
@@ -10,6 +10,7 @@ import { AppState } from '@ts-types/store';
 import qs from 'qs';
 import * as config from '@config';
 import { routerRedux } from 'dva/router';
+import storage from '@utils/storage'
 import { modelExtend } from './common';
 
 const namespace = 'app';
@@ -21,7 +22,7 @@ export default modelExtend<AppState>({
     user: {
       token: 'token',
       id: 1,
-      usename: 'zhangsan',
+      username: 'zhangsan',
     },
     menu: [
       {
@@ -44,7 +45,7 @@ export default modelExtend<AppState>({
         name: '群管理',
         sort: 233,
         path: 'chat',
-        component: '/mini/wetool/mailList/groupManagement',
+        component: '/zs/example',
         pid: 82,
         cache: false,
         hidden: false,
@@ -91,20 +92,17 @@ export default modelExtend<AppState>({
   },
 
   effects: {
-    * initialize(
-      { payload }: ReduxAction,
-      { put, select, call }: ReduxSagaEffects,
-    ) {
-      // const token = storage.getItem(`${prefix}-token`);
+    * initialize({ payload }: ReduxAction, { put, select, call }: ReduxSagaEffects) {
+      const token = storage.getItem(`${prefix}-token`);
       const { locationPathname }: AppState = yield select((_) => _[namespace]);
 
       // token 不存在时直接跳转到登录页
-      // if (!token) {
-      //   yield put(routerRedux.push({
-      //     pathname: loginRouter,
-      //   }))
-      //   return undefined;
-      // }
+      if (!token) {
+        yield put(routerRedux.push({
+          pathname: loginRouter,
+        }))
+        return undefined;
+      }
 
       // const { success, data: user } = yield call(appService.fetchUser);
 
@@ -148,7 +146,7 @@ export default modelExtend<AppState>({
       ) {
         yield put(
           routerRedux.push({
-            pathname: '/logout',
+            pathname: '/usercenter',
           }),
         );
       }
