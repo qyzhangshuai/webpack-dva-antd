@@ -2,11 +2,11 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:33:34
- * @LastEditTime: 2020-06-27 18:16:55
+ * @LastEditTime: 2020-06-27 22:05:52
  * @LastEditors: zs
  */
 import { ReduxSagaEffects, DvaSetupParams, ReduxAction } from '@ts-types/dva';
-import { AppState } from '@ts-types/store';
+import { RootState, AppState } from '@ts-types/store';
 import qs from 'qs';
 import * as config from '@config';
 import { routerRedux } from 'dva/router';
@@ -57,11 +57,11 @@ export default modelExtend<AppState>({
       },
     ],
     defaultMenu: {},
-    menuPopoverVisible: false,
-    // siderFold: storage.getItem(`${prefix}siderFold`) === 'true',
-    // darkTheme: storage.getItem(`${prefix}darkTheme`) === 'true',
-    isNavbar: document.body.clientWidth < 769,
-    // navOpenKeys: JSON.parse(storage.getItem(`${prefix}navOpenKeys`)) || [],
+    menuPopoverVisible: false, // 浮层的显示与隐藏
+    siderFold: storage.getItem(`${prefix}siderFold`) === 'true', // 抽屉的显示与隐藏
+    darkTheme: storage.getItem(`${prefix}darkTheme`) === 'true', // 控制主题色
+    isNavbar: document.body.clientWidth < 769, // 为true对应浮层的button，为false则为抽屉的弹层
+    navOpenKeys: JSON.parse(storage.getItem(`${prefix}navOpenKeys`)) || [],
     defaultOpenKeys: [],
     locationPathname: '',
     locationQuery: {},
@@ -149,6 +149,14 @@ export default modelExtend<AppState>({
             pathname: '/usercenter',
           }),
         );
+      }
+    },
+
+    * changeNavbar(_action: ReduxAction, { put, select }: ReduxSagaEffects) {
+      const { app }: RootState = yield (select((_: RootState) => _))
+      const isNavbar = document.body.clientWidth < 769
+      if (isNavbar !== app.isNavbar) {
+        yield put({ type: 'handleNavbar', payload: isNavbar })
       }
     },
   },

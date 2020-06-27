@@ -2,13 +2,14 @@
  * @description: Example
  * @author: zs
  * @Date: 2020-06-27 17:52:50
- * @LastEditTime: 2020-06-27 19:02:59
+ * @LastEditTime: 2020-06-27 21:38:08
  * @LastEditors: zs
  */
 import React from 'react'
 import { connect } from 'dva'
 import { Dispatch } from '@ts-types/dva'
 import { RootState } from '@ts-types/store'
+import styles from './index.less'
 
 interface ExampleProps {
   dispatch: Dispatch
@@ -16,77 +17,31 @@ interface ExampleProps {
 
 // #----------- 上: ts类型定义 ----------- 分割线 ----------- 下: JS代码 -----------
 
+const style111: React.CSSProperties = {
+  height: 40,
+  width: 40,
+  lineHeight: '40px',
+  borderRadius: 4,
+  backgroundColor: '#1088e9',
+  color: '#fff',
+  textAlign: 'center',
+  fontSize: 14,
+  zIndex: 9999,
+};
+
 const Example: React.SFC<ExampleProps> = ({
   dispatch,
 }) => {
   console.log('11')
 
   return (
-    <div style={{ overflow: 'auto', height: '100%' }}>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
-      <div>example</div>
+    <div style={{ height: '600vh', padding: 8 }}>
+      <div>Example</div>
+      <div>Example</div>
+      <div>Example</div>
+      <div>Example</div>
+      <div>Example</div>
+      <div>Example</div>
     </div>
   )
 }

@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:52:45
- * @LastEditTime: 2020-06-27 19:03:46
+ * @LastEditTime: 2020-06-27 21:53:12
  * @LastEditors: zs
  */
 /* global window */
@@ -51,6 +51,14 @@ type Props = StateProps & DispatchProps & OwnProps & RouterProps;
 const { Content } = Layout;
 const { Header } = MyLayout;
 
+const contentStyle: CSSProperties = {
+  position: 'relative',
+  overflowX: 'hidden',
+  overflowY: 'auto',
+  zIndex: 100,
+  padding: 0,
+}
+
 const {
   prefix, openPages, openFullscreenPages, openPagesOnlyHeader,
 } = config;
@@ -65,6 +73,8 @@ const App: FC<Props> = ({
     menu,
     siderFold,
     isNavbar,
+    darkTheme,
+    defaultOpenKeys,
     menuPopoverVisible,
     navOpenKeys,
   } = useMemo(() => app, [app]);
@@ -88,7 +98,7 @@ const App: FC<Props> = ({
     menu,
     user,
     location,
-    isNavbar, // popOver的时候
+    isNavbar, // 是最右侧菜单的控制bar，document.body.clientWidth < 769,
     navOpenKeys,
     menuPopoverVisible, // popOver的显示于隐藏
     // 左侧菜单显不显示
@@ -126,6 +136,28 @@ const App: FC<Props> = ({
     },
   };
 
+  const siderProps = {
+    menu,
+    location,
+    siderFold,
+    darkTheme,
+    navOpenKeys,
+    defaultOpenKeys,
+    switchSider() {
+      dispatch({ type: 'app/switchSider' })
+    },
+    changeTheme() {
+      dispatch({ type: 'app/switchTheme' })
+    },
+    changeOpenKeys(openKeys: string[]) {
+      window.localStorage.setItem(`${prefix}navOpenKeys`, JSON.stringify(openKeys))
+      dispatch({ type: 'app/handleNavOpenKeys', payload: { navOpenKeys: openKeys } })
+    },
+    changeMenu() {
+      dispatch({ type: 'app/switchSider' })
+    },
+  }
+
   const initLoading = useMemo(() => loading.effects['app/initialize'], [loading]);
 
   if (openFullscreenPages.includes(pathname)) {
@@ -152,14 +184,14 @@ const App: FC<Props> = ({
       <Loader fullScreen spinning={initLoading} />
       {/* <Layout className={classnames({ [styles.dark]: darkTheme, [styles.light]: !darkTheme })}> */}
       <Layout>
-        {/* {!isNavbar && <MyLayout.Sider {...siderProps} />} */}
+        {!isNavbar && <MyLayout.Sider {...siderProps} />}
 
         <Layout
           style={{ height: '100vh', overflow: 'hidden' }}
           id="mainContainer"
         >
           <Header {...headerProps} />
-          <Content>
+          <Content style={contentStyle}>
             {
               hasPermission || (user.id && openPages.includes(pathname))
                 ? children
