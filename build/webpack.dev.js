@@ -2,8 +2,8 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-06-26 17:44:06
- * @LastEditors: zs
+ * @LastEditTime 2020-07-01 20:17:47
+ * @LastEditors zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
 // const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
@@ -14,7 +14,7 @@ const { mockApiToApp } = require('mockjs-server-cli');
 const mockData = require('../mock.config.js');
 
 const host = '127.0.0.1';
-const port = '4000';
+const port = '4009';
 
 module.exports = {
 	mode: 'development',

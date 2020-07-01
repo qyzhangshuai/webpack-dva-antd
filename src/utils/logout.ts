@@ -2,8 +2,8 @@
  * @description: logout 登出方法,不需要接口退出，直接清除 token 就好
  * @author: zs
  * @Date: 2020-06-27 16:49:48
- * @LastEditTime: 2020-06-27 18:03:23
- * @LastEditors: zs
+ * @LastEditTime 2020-07-01 20:28:08
+ * @LastEditors zs
  */
 
 import { prefix, loginRouter } from '@config';

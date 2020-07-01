@@ -2,8 +2,8 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-06-27 17:35:45
- * @LastEditors: zs
+ * @LastEditTime 2020-07-01 20:32:48
+ * @LastEditors zs
  */
 import React from 'react';
 import { Input, Button } from 'antd'
@@ -13,7 +13,11 @@ import styles from './index.less'
 
 const { prefix } = config
 
-const Login = () => {
+interface LoginProps {
+  [props: string]: any
+}
+
+const Login: React.SFC<LoginProps> = () => {
   const handleLogin = () => {
     storage.setItem(`${prefix}-token`, 'zhangsan')
     window.location.href = 'http://127.0.0.1:4000'

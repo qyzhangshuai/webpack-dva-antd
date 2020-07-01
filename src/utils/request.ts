@@ -1,3 +1,11 @@
+/**
+ * @description 请求
+ * @author zs
+ * @Date 2020-06-28 21:42:14
+ * @LastEditTime 2020-07-01 22:24:30
+ * @LastEditors zs
+ */
+
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import cloneDeep from 'lodash/cloneDeep'
 import { message } from 'antd'
