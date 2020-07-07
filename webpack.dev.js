@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-05 16:01:40
+ * @LastEditTime: 2020-07-05 16:13:19
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -11,7 +11,7 @@ const path = require('path');
 const fs = require('fs')
 const webpack = require('webpack')
 const { mockApiToApp } = require('mockjs-server-cli');
-const mockData = require('../mock.config.js');
+const mockData = require('./mock.config.js');
 
 const host = '127.0.0.1';
 const port = '4009';
@@ -43,7 +43,7 @@ module.exports = {
 		open: true,
 		compress: true,// gzip 可以提升返回页面的速度
 		watchContentBase: true, // 监视 contentBase 目录下的所有文件，一旦文件变化就会 reload
-		contentBase: path.resolve(__dirname, '../dist'), // webpack启动服务会在dist目录下
+		contentBase: path.resolve(__dirname, './dist'), // webpack启动服务会在dist目录下
 		overlay: false,
 		// overlay: {
 		// 	warnings: true,

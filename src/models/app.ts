@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:33:34
- * @LastEditTime: 2020-06-27 22:05:52
+ * @LastEditTime: 2020-07-05 17:44:04
  * @LastEditors: zs
  */
 import { ReduxSagaEffects, DvaSetupParams, ReduxAction } from '@ts-types/dva';
@@ -146,7 +146,8 @@ export default modelExtend<AppState>({
       ) {
         yield put(
           routerRedux.push({
-            pathname: '/usercenter',
+            // pathname: '/usercenter',
+            pathname: '/login',
           }),
         );
       }

@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-10 20:11:15
- * @LastEditTime: 2020-06-25 18:59:22
+ * @LastEditTime: 2020-07-07 22:00:21
  * @LastEditors: zs
  */
 
@@ -11,6 +11,11 @@ import dva from 'dva'
 import createLoading from 'dva-loading'
 import { createBrowserHistory } from 'history'
 import { RootState } from '@ts-types/store';
+// import '@babel/polyfill'
+
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 // 1. Initialize
 const app = dva({
   ...createLoading({

@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-07 22:01:57
+ * @LastEditTime: 2020-07-05 20:36:14
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -16,8 +16,8 @@ const PurgeCssWebpackPlugin = require('purgecss-webpack-plugin');
 const glob = require('glob'); // 主要功能就是查找匹配的文件
 const webpack = require('webpack')
 
-const thems = require('../theme.config') // 配置主题
-const VERSION = require('../version')
+const thems = require('./theme.config') // 配置主题
+const VERSION = require('./version')
 
 const ENV = process.env.ENV;
 
@@ -46,10 +46,10 @@ module.exports = env => {
   // env 是环境变量
   // let isDev = env.development;
   const base = {
-    entry: path.resolve(__dirname, "../src/index.tsx"),
+    entry: path.resolve(__dirname, "./src/index.tsx"),
     output: {
       filename: '[name].bundle.js',
-      path: path.resolve(__dirname, "../dist"),
+      path: path.resolve(__dirname, "./dist"),
       publicPath: publicPath
     },
     module: {
@@ -60,21 +60,21 @@ module.exports = env => {
       // 解析的css的时候 就不能渲染dom
       // css 可以并行和js 一同加载 mini-css-extract-plugin
       rules: [
-        // {
-        //   test: /\.(js|jsx|ts|tsx)$/,
-        //   loader: 'eslint-loader',
-        //   enforce: 'pre', // 编译前检查
-        //   exclude: /node_modules/, // 不检测的文件
-        //   include: [path.resolve(__dirname, '../src')], // 要检查的目录
-        //   options: {
-        //     fix: true
-        //   }
-        // },
+        {
+          test: /\.(js|jsx|ts|tsx)$/,
+          loader: 'eslint-loader',
+          enforce: 'pre', // 编译前检查
+          exclude: /node_modules/, // 不检测的文件
+          include: [path.resolve(__dirname, '../src')], // 要检查的目录
+          options: {
+            fix: true
+          }
+        },
         {
           oneOf: [
             { // 解析js文件 默认会调用@babel/core 
-              test: /\.(js|jsx|ts|tsx|ejs)$/,
-              // use: 'babel-loader',
+              test: /\.(js|jsx|ts|tsx)$/,
+              use: 'babel-loader',
               exclude: /node_modules/,
               use: [
                 {
@@ -84,15 +84,12 @@ module.exports = env => {
                       [
                         "@babel/preset-env",
                         {
-                          "useBuiltIns": "entry",
-                          // "useBuiltIns": "usage",
-                          "corejs": 3,
-                        },
+                          "useBuiltIns": "usage",
+                          "corejs": "3"
+                        }
                       ],
                       "@babel/preset-react",
-                      [
-                        "@babel/preset-typescript"
-                      ]
+                      "@babel/preset-typescript"
                     ],
                     "plugins": [
                       [
@@ -115,15 +112,10 @@ module.exports = env => {
                           "loose": true
                         }
                       ],
-                      [
-                        "@babel/plugin-transform-runtime",
-                        // {
-                        //   corejs: 3,
-                        //   helpers: true,
-                        // }
-                      ]
+                      "@babel/plugin-transform-runtime"
                     ]
                   }
+
                 }
               ]
             },
@@ -213,17 +205,17 @@ module.exports = env => {
     },
     resolve: {
       alias: {
-        '@components': `${__dirname}/../src/components`,
-        '@models': `${__dirname}/../src/models`,
-        '@services': `${__dirname}/../src/services`,
-        '@config': `${__dirname}/../src/config`,
-        '@constant': `${__dirname}/../src/constant`,
-        '@routes': `${__dirname}/../src/routes`,
-        '@utils': `${__dirname}/../src/utils`,
-        '@hooks': `${__dirname}/../src/hooks`,
-        '@ts-types': `${__dirname}/../src/ts-types`,
-        '@enums': `${__dirname}/../src/utils/enums`,
-        'themes': `${__dirname}/../src/themes`,
+        '@components': `${__dirname}/src/components`,
+        '@models': `${__dirname}/src/models`,
+        '@services': `${__dirname}/src/services`,
+        '@config': `${__dirname}/src/config`,
+        '@constant': `${__dirname}/src/constant`,
+        '@routes': `${__dirname}/src/routes`,
+        '@utils': `${__dirname}/src/utils`,
+        '@hooks': `${__dirname}/src/hooks`,
+        '@ts-types': `${__dirname}/src/ts-types`,
+        '@enums': `${__dirname}/src/utils/enums`,
+        'themes': `${__dirname}/src/themes`,
       },
       extensions: ['.tsx', '.ts', ".js", '.jsx'],
     },
@@ -234,7 +226,7 @@ module.exports = env => {
         chunkFilename: 'css/[id].[contenthash].css',
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "../public/index.html"),
+        template: path.resolve(__dirname, "./public/index.html"),
         filename: "index.html",
         inject: true,
         minify: !isDev && { // 代表开发环境不要压缩，如果是生产环境则压缩

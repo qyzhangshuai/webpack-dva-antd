@@ -6,6 +6,7 @@
   "scripts": {
     "build": "cross-env ENV=production webpack --config ./build/webpack.base",
     "dev": "cross-env ENV=development webpack-dev-server  --config ./build/webpack.base",
+    "dev1": "cross-env ENV=development webpack-dev-server  --config ./webpack.base",
     "start": "npm run dev",
     "dev:build": "cross-env ENV=development webpack --config ./build/webpack.base",
     "lint": "eslint --fix --ext .ts,.tsx src",
@@ -32,6 +33,7 @@
     "autoprefixer": "^9.8.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.0",
+    "@babel/polyfill": "^7.10.4",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.2",
     "core-js": "3",
