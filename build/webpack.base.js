@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-07 22:22:58
+ * @LastEditTime: 2020-07-07 22:32:15
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -47,7 +47,6 @@ module.exports = env => {
   // let isDev = env.development;
   const base = {
     entry: path.resolve(__dirname, "../src/index.tsx"),
-    // entry: { iterator: 'core-js/modules/es.array.iterator', Promise: 'core-js/modules/es.promise', index: path.resolve(__dirname, "../src/index.tsx") },
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, "../dist"),
