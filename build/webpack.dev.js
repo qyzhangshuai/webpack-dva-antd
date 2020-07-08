@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-05 16:01:40
+ * @LastEditTime: 2020-07-08 12:25:43
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -18,7 +18,7 @@ const port = '4009';
 
 module.exports = {
 	mode: 'development',
-	devtool: 'eval-cheap-module-souce-map',
+	devtool: 'cheap-module-source-map',
 	watchOptions: {
 		ignored: /node_modules/
 	},

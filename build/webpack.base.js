@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-07 22:32:15
+ * @LastEditTime: 2020-07-08 12:05:05
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -48,11 +48,13 @@ module.exports = env => {
   const base = {
     entry: path.resolve(__dirname, "../src/index.tsx"),
     output: {
-      filename: '[name].bundle.js',
+      filename: isDev ? 'js/bundle.js' : 'js/[name].[contenthash:10].js',
+      chunkFilename: isDev ? 'js/[name].chunk.js' : 'js/[name].[contenthash:10]_chunk.js', // 非入口chunk的名称
       path: path.resolve(__dirname, "../dist"),
       publicPath: publicPath
     },
     module: {
+      // noParse: /jquery|lodash/, // 正则表达式
       // 转化什么文件 用什么去转，使用哪些loader
       // loader 写法 [] / {} ''
       // 打包css 还需要处理一下 样式前缀
@@ -60,16 +62,16 @@ module.exports = env => {
       // 解析的css的时候 就不能渲染dom
       // css 可以并行和js 一同加载 mini-css-extract-plugin
       rules: [
-        // {
-        //   test: /\.(js|jsx|ts|tsx)$/,
-        //   loader: 'eslint-loader',
-        //   enforce: 'pre', // 编译前检查
-        //   exclude: /node_modules/, // 不检测的文件
-        //   include: [path.resolve(__dirname, '../src')], // 要检查的目录
-        //   options: {
-        //     fix: true
-        //   }
-        // },
+        {
+          test: /\.(js|jsx|ts|tsx)$/,
+          loader: 'eslint-loader',
+          enforce: 'pre', // 编译前检查
+          exclude: /node_modules/, // 不检测的文件
+          include: [path.resolve(__dirname, '../src')], // 要检查的目录
+          options: {
+            fix: true
+          }
+        },
         {
           oneOf: [
             { // 解析js文件 默认会调用@babel/core 
@@ -77,6 +79,12 @@ module.exports = env => {
               // use: 'babel-loader',
               exclude: /node_modules/,
               use: [
+                {
+                  loader: 'thread-loader',
+                  options: {
+                    workers: 2 // 进程2个
+                  }
+                },
                 {
                   loader: 'babel-loader',
                   options: {
@@ -115,7 +123,10 @@ module.exports = env => {
                       ],
                       "@babel/plugin-transform-runtime",
 
-                    ]
+                    ],
+                    // 开启babel缓存
+                    // 第二次构建时，会读取之前的缓存
+                    cacheDirectory: true
                   }
                 }
               ]
@@ -171,6 +182,7 @@ module.exports = env => {
                   }
                 },
                 "postcss-loader",
+                "less-loader",
                 {
                   loader: "less-loader",
                   options: {
@@ -185,10 +197,13 @@ module.exports = env => {
 
             { // 图标的转化
               test: /\.(woff|woff2|eot|ttf|otf)$/,
-              use: 'file-loader'
+              loader: 'file-loader',
+              options: {
+                name: "image/[contentHash].[ext]",
+              }
             },
             { // 图片的转化
-              test: /\.(jpe?g|png|gif|svg)$/,
+              test: /\.(jpe?g|png|gif|svg|bmp)$/,
               use: {
                 loader: 'url-loader',
                 // 如果大于100k的图片 会使用file-loader
@@ -223,16 +238,24 @@ module.exports = env => {
     plugins: [
       // 在每次打包之前 先清除dist目录下的文件
       !isDev && new MiniCssExtractPlugin({ // 如果是开发模式就不要使用抽离样式的插件
-        filename: 'css/[name].[contenthash].css',
-        chunkFilename: 'css/[id].[contenthash].css',
+        filename: 'css/[name].[contenthash:10].css',
+        chunkFilename: 'css/[id].[contenthash:10].css',
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "../public/index.html"),
         filename: "index.html",
         inject: true,
         minify: !isDev && { // 代表开发环境不要压缩，如果是生产环境则压缩
-          removeAttributeQuotes: true, // 删除属性双引号
-          collapseWhitespace: true
+          removeComments: true,
+          collapseWhitespace: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true,
+          removeEmptyAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          keepClosingSlash: true,
+          minifyJS: true,
+          minifyCSS: true,
+          minifyURLs: true,
         }
       }),
       // new PurgeCssWebpackPlugin({
@@ -245,8 +268,10 @@ module.exports = env => {
         'process.env.ENV': JSON.stringify(ENV),
         'process.env.VERSION': JSON.stringify(VERSION),
       }),
-      new webpack.NamedModulesPlugin(),
-
+      // new webpack.NamedModulesPlugin(),
+      // moment.js是一个非常流行的库，由于webpack解释其代码的方式，默认情况下绑定大型区域设置文件。这是一个实用的解决方案，它要求用户选择导入特定的语言环境。
+      // 如果不使用，可以将其删除moment.js:
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ].filter(Boolean)
   };
   // 函数要返回配置文件，没返回会采用默认配置
