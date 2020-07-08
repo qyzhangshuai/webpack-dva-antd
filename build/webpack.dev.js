@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-08 12:25:43
+ * @LastEditTime: 2020-07-08 23:45:03
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -10,11 +10,12 @@
 const path = require('path');
 const fs = require('fs')
 const webpack = require('webpack')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const { mockApiToApp } = require('mockjs-server-cli');
 const mockData = require('../mock.config.js');
-
 const host = '127.0.0.1';
 const port = '4009';
+const ishttps = false
 
 module.exports = {
 	mode: 'development',
@@ -36,9 +37,20 @@ module.exports = {
 
 		// 设置热更新
 		new webpack.HotModuleReplacementPlugin(),
+		new FriendlyErrorsWebpackPlugin({
+			compilationSuccessInfo: {
+				messages: [`Your application is running here: ${ishttps ? 'https' : 'http'}://${host}:${port}`],
+			},
+			// onErrors: config.dev.notifyOnErrors
+			// 	? utils.createNotifierCallback()
+			// 	: undefined,
+			clearConsole: true,
+		}),
+
 	],
 	devServer: { // 开发服务的配置 
 		host,
+		https: ishttps,
 		port,
 		open: true,
 		compress: true,// gzip 可以提升返回页面的速度
@@ -49,6 +61,8 @@ module.exports = {
 		// 	warnings: true,
 		// 	errors: true
 		// },
+		// 除了一些基本启动信息以外，其他内容都不要显示
+		// quiet: true,
 		hot: true,
 		historyApiFallback: true, // 在devServer里面有个historyApiFallback的属性，是用于如果找不到界面就返回默认首页，上线时需要使用nginx
 		disableHostCheck: true, //  新增该配置项

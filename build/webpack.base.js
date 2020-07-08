@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-08 14:15:43
+ * @LastEditTime: 2020-07-08 23:56:46
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -15,6 +15,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const PurgeCssWebpackPlugin = require('purgecss-webpack-plugin');
 const glob = require('glob'); // 主要功能就是查找匹配的文件
 const webpack = require('webpack')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const chalk = require('chalk')
+const WebpackBar = require('webpackbar');
+
 
 const thems = require('../theme.config') // 配置主题
 const VERSION = require('../version')
@@ -52,6 +56,10 @@ module.exports = env => {
       chunkFilename: isDev ? 'js/[name].chunk.js' : 'js/[name].[contenthash:10]_chunk.js', // 非入口chunk的名称
       path: path.resolve(__dirname, "../dist"),
       publicPath: publicPath
+    },
+    stats: 'errors-only',
+    performance: {
+      hints: false
     },
     module: {
       // noParse: /jquery|lodash/, // 正则表达式
@@ -267,10 +275,19 @@ module.exports = env => {
         'process.env.ENV': JSON.stringify(ENV),
         'process.env.VERSION': JSON.stringify(VERSION),
       }),
+      // 添加 进度条 二选一
+      // new ProgressBarPlugin({
+      //   complete: '.',  //
+      //   width: 50,
+      //   format: 'build [:bar] ' + chalk.green.bold(':percent') + '(:elapsed seconds)',
+      //   clear: false
+      // }),
+      // 添加 进度条
+      new WebpackBar(),
       // new webpack.NamedModulesPlugin(),
       // moment.js是一个非常流行的库，由于webpack解释其代码的方式，默认情况下绑定大型区域设置文件。这是一个实用的解决方案，它要求用户选择导入特定的语言环境。
       // 如果不使用，可以将其删除moment.js:
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ].filter(Boolean)
   };
   // 函数要返回配置文件，没返回会采用默认配置

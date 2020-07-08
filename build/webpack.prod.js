@@ -2,13 +2,14 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-08 12:27:16
+ * @LastEditTime: 2020-07-08 23:26:39
  * @LastEditors: zs
  */
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const safePostCssParser = require('postcss-safe-parser');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const shouldUseSourceMap = false;
 module.exports = {
@@ -86,6 +87,8 @@ module.exports = {
         },
     },
     plugins: [
+        new FriendlyErrorsWebpackPlugin(),
         new CleanWebpackPlugin(),
-    ]
+    ],
+    stats: 'errors-only',
 }

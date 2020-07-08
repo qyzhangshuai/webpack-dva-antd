@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-07-08 12:13:49
+ * @LastEditTime: 2020-07-08 23:30:37
  * @LastEditors: zs
  */
 import React from 'react';
@@ -27,19 +27,21 @@ const Login: React.SFC<LoginProps> = () => {
   }
 
   return (
-    <div>
-      <Input placeholder="请输入账号" />
-      <Input placeholder="请输入密码" />
-      <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange}>
-        <Option value="jack">Jack</Option>
-        <Option value="lucy">Lucy</Option>
-        <Option value="disabled" disabled>
-          Disabled
-        </Option>
-        <Option value="Yiminghe">yiminghe</Option>
-      </Select>
-      <Button onClick={handleLogin}>登录1</Button>
-    </div>
+    <>
+      <div>
+        <Input placeholder="请输入账号" />
+        <Input placeholder="请输入密码" />
+        <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange}>
+          <Option value="jack">Jack1</Option>
+          <Option value="lucy">Lucy</Option>
+          <Option value="disabled" disabled>
+            Disabled
+          </Option>
+          <Option value="Yiminghe">yiminghehehe</Option>
+        </Select>
+        <Button onClick={handleLogin}>登录12</Button>
+      </div>
+    </>
   )
 }
 
