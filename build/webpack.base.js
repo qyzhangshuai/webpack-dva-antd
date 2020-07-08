@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-08 12:05:05
+ * @LastEditTime: 2020-07-08 14:15:43
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -182,7 +182,6 @@ module.exports = env => {
                   }
                 },
                 "postcss-loader",
-                "less-loader",
                 {
                   loader: "less-loader",
                   options: {
