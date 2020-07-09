@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-08 23:45:03
+ * @LastEditTime: 2020-07-09 10:32:01
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -56,11 +56,11 @@ module.exports = {
 		compress: true,// gzip 可以提升返回页面的速度
 		watchContentBase: true, // 监视 contentBase 目录下的所有文件，一旦文件变化就会 reload
 		contentBase: path.resolve(__dirname, '../dist'), // webpack启动服务会在dist目录下
-		overlay: false,
-		// overlay: {
-		// 	warnings: true,
-		// 	errors: true
-		// },
+		// overlay: false,
+		overlay: {
+			warnings: true,
+			errors: true
+		},
 		// 除了一些基本启动信息以外，其他内容都不要显示
 		// quiet: true,
 		hot: true,
