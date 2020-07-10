@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-10 14:55:34
+ * @LastEditTime: 2020-07-10 22:57:49
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -16,14 +16,20 @@ const chalk = require('chalk')
 const { mockApiToApp } = require('mockjs-server-cli');
 const mockData = require('../mock.config.js');
 const { createNotifierCallback, getNetworkIp, newWorkUrl } = require('./utils')
-const host = '127.0.0.1';
-const port = '4009';
+
 const isHttps = false
 const notifyOnErrors = true
+const host = 'localhost';
+let port = '4009';
+
+const PORT = process.env.PORT;
+if (PORT) {
+	port = PORT
+}
 
 module.exports = {
 	mode: 'development',
-	devtool: 'cheap-module-source-map',
+	devtool: 'source-map',
 	watchOptions: {
 		ignored: /node_modules/
 	},
@@ -69,9 +75,9 @@ module.exports = {
 		compress: true,// gzip 可以提升返回页面的速度
 		watchContentBase: true, // 监视 contentBase 目录下的所有文件，一旦文件变化就会 reload
 		contentBase: path.resolve(__dirname, '../dist'), // webpack启动服务会在dist目录下
-		// overlay: false,
+		// overlay: true,
 		overlay: {
-			warnings: true,
+			warnings: false,
 			errors: true
 		},
 		// 除了一些基本启动信息以外，其他内容都不要显示

@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-10 15:37:02
+ * @LastEditTime: 2020-07-10 15:58:13
  * @LastEditors: zs
  */
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -15,7 +15,8 @@ const { hasMultipleCores } = require('./utils')
 const shouldUseSourceMap = false;
 module.exports = {
     mode: 'production',
-    devtool: 'source-map',
+    // devtool: 'source-map',
+    devtool: 'none',
     optimization: { // 优化项
         splitChunks: {
             chunks: 'all',
