@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-08 23:26:39
+ * @LastEditTime: 2020-07-10 15:37:02
  * @LastEditors: zs
  */
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -10,6 +10,7 @@ const TerserWebpackPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const safePostCssParser = require('postcss-safe-parser');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const { hasMultipleCores } = require('./utils')
 
 const shouldUseSourceMap = false;
 module.exports = {
@@ -40,6 +41,7 @@ module.exports = {
                 },
             }), // 用了这个 js 也得手动压缩
             new TerserWebpackPlugin({
+                parallel: hasMultipleCores(),
                 // 启动source-map
                 sourceMap: shouldUseSourceMap,
                 terserOptions: {
@@ -90,5 +92,12 @@ module.exports = {
         new FriendlyErrorsWebpackPlugin(),
         new CleanWebpackPlugin(),
     ],
-    stats: 'errors-only',
+    // 只显示错误的情况+打包后的资源信息的显示
+    stats: {
+        all: false,
+        // errors: true,
+        moduleTrace: true,
+        logging: "error",
+        assets: true,
+    },
 }

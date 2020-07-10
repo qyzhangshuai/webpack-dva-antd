@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-10 09:46:05
+ * @LastEditTime: 2020-07-10 14:55:34
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -12,9 +12,10 @@ const fs = require('fs')
 const webpack = require('webpack')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const notifier = require('node-notifier');
+const chalk = require('chalk')
 const { mockApiToApp } = require('mockjs-server-cli');
 const mockData = require('../mock.config.js');
-const { createNotifierCallback } = require('./utils')
+const { createNotifierCallback, getNetworkIp, newWorkUrl } = require('./utils')
 const host = '127.0.0.1';
 const port = '4009';
 const isHttps = false
@@ -42,8 +43,15 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 		new FriendlyErrorsWebpackPlugin({
 			compilationSuccessInfo: {
-				messages: [`Your application is running here: ${isHttps ? 'https' : 'http'}://${host}:${port}`],
-				// notes:['有些附加说明要在成功编辑时显示']
+				messages: [
+					`App running at:`,
+					`- Local:   ${chalk.cyan(newWorkUrl(isHttps, host, port))}`,
+					`- Network: ${chalk.cyan(newWorkUrl(isHttps, getNetworkIp(), port))}`,
+				],
+				notes: [
+					'Note that the development build is not optimized.',
+					`To create a production build, run ${chalk.cyan('npm run build')}`,
+				]
 			},
 			//  运行错误
 			onErrors: notifyOnErrors ? createNotifierCallback : undefined,
@@ -67,7 +75,7 @@ module.exports = {
 			errors: true
 		},
 		// 除了一些基本启动信息以外，其他内容都不要显示
-		// quiet: true,
+		quiet: true,
 		hot: true,
 		historyApiFallback: true, // 在devServer里面有个historyApiFallback的属性，是用于如果找不到界面就返回默认首页，上线时需要使用nginx
 		disableHostCheck: true, //  新增该配置项

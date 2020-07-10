@@ -2,9 +2,11 @@
  * @description: 
  * @author: zs
  * @Date: 2020-07-10 09:44:35
- * @LastEditTime: 2020-07-10 09:45:10
+ * @LastEditTime: 2020-07-10 14:32:51
  * @LastEditors: zs
  */
+const os = require('os');
+
 function createNotifierCallback(severity, errors) {
   // 可以收听插件转换和优先级的错误
   // 严重性可以是'错误'或'警告'
@@ -20,6 +22,41 @@ function createNotifierCallback(severity, errors) {
   });
 }
 
+function hasMultipleCores() {
+  try {
+    return require('os').cpus().length > 1
+  } catch (e) {
+    return false
+  }
+}
+
+function getNetworkIp() {
+  let needHost = ''; // 打开的host
+  try {
+    // 获得网络接口列表
+    let network = os.networkInterfaces();
+    for (let dev in network) {
+      let iface = network[dev];
+      for (let i = 0; i < iface.length; i++) {
+        let alias = iface[i];
+        if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+          needHost = alias.address;
+        }
+      }
+    }
+  } catch (e) {
+    needHost = 'localhost';
+  }
+  return needHost;
+}
+
+function newWorkUrl(isHttps, host, port) {
+  return `${isHttps ? 'https' : 'http'}://${host}:${port}/`
+}
+
 module.exports = {
   createNotifierCallback,
+  hasMultipleCores,
+  getNetworkIp,
+  newWorkUrl,
 }

@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-10 09:28:34
+ * @LastEditTime: 2020-07-10 15:31:38
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -45,7 +45,6 @@ switch (ENV) {
     break;
 }
 
-
 module.exports = env => {
   // env 是环境变量
   // let isDev = env.development;
@@ -57,7 +56,6 @@ module.exports = env => {
       path: path.resolve(__dirname, "../dist"),
       publicPath: publicPath
     },
-    stats: 'errors-only',
     performance: {
       hints: false
     },
@@ -134,7 +132,7 @@ module.exports = env => {
                     ],
                     // 开启babel缓存
                     // 第二次构建时，会读取之前的缓存
-                    cacheDirectory: true, 
+                    cacheDirectory: true,
                   }
                 }
               ]
