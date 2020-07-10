@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-07-08 23:30:37
+ * @LastEditTime: 2020-07-10 09:29:07
  * @LastEditors: zs
  */
 import React from 'react';
@@ -39,7 +39,7 @@ const Login: React.SFC<LoginProps> = () => {
           </Option>
           <Option value="Yiminghe">yiminghehehe</Option>
         </Select>
-        <Button onClick={handleLogin}>登录12</Button>
+        <Button onClick={handleLogin}>登录</Button>
       </div>
     </>
   )

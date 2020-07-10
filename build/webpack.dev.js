@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-09 10:32:01
+ * @LastEditTime: 2020-07-10 09:46:05
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -11,11 +11,14 @@ const path = require('path');
 const fs = require('fs')
 const webpack = require('webpack')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const notifier = require('node-notifier');
 const { mockApiToApp } = require('mockjs-server-cli');
 const mockData = require('../mock.config.js');
+const { createNotifierCallback } = require('./utils')
 const host = '127.0.0.1';
 const port = '4009';
-const ishttps = false
+const isHttps = false
+const notifyOnErrors = true
 
 module.exports = {
 	mode: 'development',
@@ -39,18 +42,20 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 		new FriendlyErrorsWebpackPlugin({
 			compilationSuccessInfo: {
-				messages: [`Your application is running here: ${ishttps ? 'https' : 'http'}://${host}:${port}`],
+				messages: [`Your application is running here: ${isHttps ? 'https' : 'http'}://${host}:${port}`],
+				// notes:['有些附加说明要在成功编辑时显示']
 			},
-			// onErrors: config.dev.notifyOnErrors
-			// 	? utils.createNotifierCallback()
-			// 	: undefined,
+			//  运行错误
+			onErrors: notifyOnErrors ? createNotifierCallback : undefined,
+			//是否每次编译之间清除控制台
+			//默认为true
 			clearConsole: true,
 		}),
 
 	],
 	devServer: { // 开发服务的配置 
 		host,
-		https: ishttps,
+		https: isHttps,
 		port,
 		open: true,
 		compress: true,// gzip 可以提升返回页面的速度
@@ -88,3 +93,4 @@ module.exports = {
 
 	}
 }
+

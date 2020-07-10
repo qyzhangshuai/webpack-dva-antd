@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-08 23:56:46
+ * @LastEditTime: 2020-07-10 09:28:34
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -134,7 +134,7 @@ module.exports = env => {
                     ],
                     // 开启babel缓存
                     // 第二次构建时，会读取之前的缓存
-                    cacheDirectory: true
+                    cacheDirectory: true, 
                   }
                 }
               ]
@@ -247,6 +247,7 @@ module.exports = env => {
       !isDev && new MiniCssExtractPlugin({ // 如果是开发模式就不要使用抽离样式的插件
         filename: 'css/[name].[contenthash:10].css',
         chunkFilename: 'css/[id].[contenthash:10].css',
+        ignoreOrder: true,
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "../public/index.html"),

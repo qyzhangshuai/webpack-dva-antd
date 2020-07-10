@@ -6,6 +6,7 @@
   "scripts": {
     "build": "cross-env ENV=production webpack --config ./build/webpack.base",
     "dev": "cross-env ENV=development webpack-dev-server  --config ./build/webpack.base",
+    "test": "cross-env ENV=test webpack --config ./build/webpack.base",
     "start": "npm run dev",
     "dev:build": "cross-env ENV=development webpack --config ./build/webpack.base",
     "lint": "eslint --fix --ext .ts,.tsx src",
