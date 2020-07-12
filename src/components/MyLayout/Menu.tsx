@@ -2,7 +2,7 @@
  * @description: 菜单
  * @author: zs
  * @Date: 2020-06-28 21:42:14
- * @LastEditTime: 2020-07-12 17:21:26
+ * @LastEditTime: 2020-07-12 18:43:12
  * @LastEditors: zs
  */
 import React, { FC } from 'react'
@@ -48,7 +48,7 @@ const Menus: FC<Props> = ({
 }) => {
   // 生成树状
   const menuTree: TreeMenuItem[] = arrayToTree(menu.filter(_ => _.pid !== -1), 'id', 'pid')
-  const levelMap = {}
+  const levelMap = {} // 这个作用：收集children存在的 {id:pid}
   // 递归生成菜单
   function getMenus<T extends TreeMenuItem[]>(menuTreeN: T) {
     return menuTreeN.map((item) => {
@@ -82,11 +82,11 @@ const Menus: FC<Props> = ({
   }
 
   const menuItems = getMenus(menuTree);
-
   // 保持选中
   const getAncestorKeys = (key) => {
     const map = {}
     const getParent = (index) => {
+      // 得到该父级的id
       const result = [String(levelMap[index])]
       if (levelMap[result[0]]) {
         result.unshift(getParent(result[0])[0])
@@ -105,6 +105,7 @@ const Menus: FC<Props> = ({
   }
 
   const onOpenChange = (openKeys) => {
+    console.log('open', openKeys)
     const latestOpenKey = openKeys.find(key => !navOpenKeys.includes(key))
     const latestCloseKey = navOpenKeys.find(key => !openKeys.includes(key))
     let nextOpenKeys = []

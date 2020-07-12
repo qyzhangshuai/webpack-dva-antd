@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:33:34
- * @LastEditTime: 2020-07-12 17:07:02
+ * @LastEditTime: 2020-07-12 19:01:31
  * @LastEditors: zs
  */
 import { ReduxSagaEffects, DvaSetupParams, ReduxAction } from '@ts-types/dva';
@@ -11,6 +11,8 @@ import qs from 'qs';
 import * as config from '@config';
 import { routerRedux } from 'dva/router';
 import storage from '@utils/storage'
+import getDefaultOpenKeys from '@utils/getDefaultOpenKeys'
+import findFirstMenuItem from '@utils/findFirstMenuItem'
 import { modelExtend } from './common';
 
 const namespace = 'app';
@@ -24,68 +26,7 @@ export default modelExtend<AppState>({
       id: 1,
       username: 'zhangsan',
     },
-    menu: [
-      {
-        id: 82,
-        name: '个人通讯录',
-        sort: 231,
-        path: 'solution',
-        component: null,
-        pid: 0,
-        cache: false,
-        hidden: false,
-        componentName: '-',
-        icon: 'maillist',
-        children: null,
-        createTime: 1585195143000,
-        iframe: false,
-      },
-      {
-        id: 84,
-        name: '群管理',
-        sort: 233,
-        path: 'chat',
-        component: '/zs/example',
-        pid: 82,
-        cache: false,
-        hidden: false,
-        componentName: '-',
-        icon: 'chat',
-        children: null,
-        createTime: 1585195143000,
-        iframe: false,
-      },
-      {
-        id: 83,
-        name: '菜单',
-        sort: 232,
-        path: 'solution',
-        component: null,
-        pid: 0,
-        cache: false,
-        hidden: false,
-        componentName: '-',
-        icon: 'maillist',
-        children: null,
-        createTime: 1585195143000,
-        iframe: false,
-      },
-      {
-        id: 85,
-        name: '子菜单',
-        sort: 234,
-        path: 'chat1',
-        component: '/zs/sub',
-        pid: 83,
-        cache: false,
-        hidden: false,
-        componentName: '-',
-        icon: 'chat',
-        children: null,
-        createTime: 1585195143000,
-        iframe: false,
-      },
-    ],
+    menu: [],
     defaultMenu: {},
     menuPopoverVisible: false, // 浮层的显示与隐藏
     siderFold: storage.getItem(`${prefix}siderFold`) === 'true', // 抽屉的显示与隐藏
@@ -152,21 +93,86 @@ export default modelExtend<AppState>({
       // const menuList: AppState['menu'] = menuResult.menuList;
       // const defaultMenu = menuResult.defaultMenu || findFirstMenuItem(menuList);
 
-      // user && user.roles && user.roles.forEach(role => {
-      //   if (operateList.includes(role)) {
-      //     isOperate = true
-      //   }
-      // })
+      const menuList = [
+        {
+          id: 82,
+          name: '个人通讯录',
+          sort: 231,
+          path: 'solution',
+          component: null,
+          pid: 0,
+          cache: false,
+          hidden: false,
+          componentName: '-',
+          icon: 'maillist',
+          children: null,
+          createTime: 1585195143000,
+          iframe: false,
+        },
+        {
+          id: 84,
+          name: '群管理',
+          sort: 233,
+          path: 'chat',
+          component: '/zs/example',
+          pid: 82,
+          cache: false,
+          hidden: false,
+          componentName: '-',
+          icon: 'chat',
+          children: null,
+          createTime: 1585195143000,
+          iframe: false,
+        },
+        {
+          id: 83,
+          name: '菜单',
+          sort: 232,
+          path: 'solution',
+          component: null,
+          pid: 0,
+          cache: false,
+          hidden: false,
+          componentName: '-',
+          icon: 'maillist',
+          children: null,
+          createTime: 1585195143000,
+          iframe: false,
+        },
+        {
+          id: 85,
+          name: '子菜单',
+          sort: 234,
+          path: 'chat1',
+          component: '/zs/sub',
+          pid: 83,
+          cache: false,
+          hidden: false,
+          componentName: '-',
+          icon: 'chat',
+          children: null,
+          createTime: 1585195143000,
+          iframe: false,
+        },
+      ]
+      const menuResult = {
+        menuList,
+        defaultMenu: menuList[1],
+      }
+      const user = {
+        id: '12',
+      }
 
-      // yield put({
-      //   type: 'updateState',
-      //   payload: {
-      //     user,
-      //     menu: menuList,
-      //     defaultMenu,
-      //     defaultOpenKeys: getDefaultOpenKeys(menuList),
-      //   },
-      // })
+      const defaultMenu: any = menuResult.defaultMenu || findFirstMenuItem(menuList);
+      yield put({
+        type: 'updateState',
+        payload: {
+          user,
+          menu: menuList,
+          defaultMenu,
+          defaultOpenKeys: getDefaultOpenKeys(menuList),
+        },
+      })
 
       if (
         locationPathname === '/'
@@ -174,12 +180,9 @@ export default modelExtend<AppState>({
         || locationPathname === '/mini/'
         || locationPathname === loginRouter
       ) {
-        yield put(
-          routerRedux.push({
-            // pathname: '/usercenter',
-            pathname: '/zs/example',
-          }),
-        );
+        yield put(routerRedux.push({
+          pathname: defaultMenu.component,
+        }))
       }
     },
 
