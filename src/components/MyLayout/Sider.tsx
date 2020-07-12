@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-26 20:29:39
- * @LastEditTime: 2020-07-12 16:10:58
+ * @LastEditTime: 2020-07-12 19:30:53
  * @LastEditors: zs
  */
 
@@ -61,6 +61,7 @@ const MySider: FC<Props> = ({
       <Sider
         trigger={null}
         width="100%"
+        theme={darkTheme ? 'dark' : 'light'} // 这个只控制上面的部分
       >
         {menu.length === 0 ? null : (
           <div>

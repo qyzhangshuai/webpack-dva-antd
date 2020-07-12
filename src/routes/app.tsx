@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:52:45
- * @LastEditTime: 2020-07-12 17:34:18
+ * @LastEditTime: 2020-07-12 19:31:23
  * @LastEditors: zs
  */
 /* global window */
@@ -183,7 +183,7 @@ const App: FC<Props> = ({
   return (
     <div>
       <Loader fullScreen spinning={initLoading} />
-      <Layout className={classnames({ [styles.dark]: darkTheme, [styles.light]: !darkTheme })}>
+      <Layout>
         {!isNavbar && <MyLayout.Sider {...siderProps} />}
 
         <Layout

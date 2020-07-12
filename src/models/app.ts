@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:33:34
- * @LastEditTime: 2020-07-12 19:01:31
+ * @LastEditTime: 2020-07-12 19:03:05
  * @LastEditors: zs
  */
 import { ReduxSagaEffects, DvaSetupParams, ReduxAction } from '@ts-types/dva';
@@ -211,13 +211,13 @@ export default modelExtend<AppState>({
       };
     },
 
-    // switchTheme(state: AppState) {
-    //   storage.setItem(`${prefix}darkTheme`, !state.darkTheme)
-    //   return {
-    //     ...state,
-    //     darkTheme: !state.darkTheme,
-    //   }
-    // },
+    switchTheme(state: AppState) {
+      storage.setItem(`${prefix}darkTheme`, !state.darkTheme)
+      return {
+        ...state,
+        darkTheme: !state.darkTheme,
+      }
+    },
 
     switchMenuPopver(state: AppState) {
       return {

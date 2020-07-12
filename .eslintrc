@@ -40,6 +40,7 @@
     "import/no-extraneous-dependencies": 0, // 额外的依赖
     "no-plusplus": 0, // 可以使用一元运算符 ++ --
     "no-restricted-syntax": 0,
+    "no-constant-condition": 0, // 可以使用常量作为条件值
   },
   "settings": {
     "react": {
