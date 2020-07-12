@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-07-12 14:40:01
+ * @LastEditTime: 2020-07-12 14:41:58
  * @LastEditors: zs
  */
 import React from 'react';
@@ -23,7 +23,7 @@ const Login: React.SFC<LoginProps> = () => {
     window.location.href = 'http://127.0.0.1:4009/usercenter'
   }
   const handleChange = (value) => {
-    console.log(`selected ${value}`, ss);
+    console.log(`selected ${value}`);
   }
 
   // const cc = ccc
@@ -41,7 +41,7 @@ const Login: React.SFC<LoginProps> = () => {
           {/* <div onClick={h}>123</div> */}
           <Option value="Yiminghe">yiminjjghehehe</Option>
         </Select>
-        <Button onClick={handleLogin}>登录</Button>
+        <Button onClick={handleLogin}>登录11</Button>
       </div>
     </>
   )
