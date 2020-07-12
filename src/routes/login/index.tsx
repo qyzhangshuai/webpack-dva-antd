@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-07-12 15:48:16
+ * @LastEditTime: 2020-07-12 23:48:48
  * @LastEditors: zs
  */
 import React from 'react';
@@ -33,7 +33,6 @@ const Login: React.SFC<LoginProps> = ({
     console.log(`selected ${value}`);
   }
 
-  // const cc = ccc
   return (
     <>
       <div>
@@ -48,7 +47,8 @@ const Login: React.SFC<LoginProps> = ({
           {/* <div onClick={h}>123</div> */}
           <Option value="Yiminghe">yiminjjghehehe</Option>
         </Select>
-        <Button onClick={handleLogin}>登录11121</Button>
+        <Button onClick={handleLogin}>登录11</Button>
+
       </div>
     </>
   )

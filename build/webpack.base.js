@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-12 19:59:52
+ * @LastEditTime: 2020-07-12 23:35:33
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -18,7 +18,10 @@ const webpack = require('webpack')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const chalk = require('chalk')
 const WebpackBar = require('webpackbar');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin'); // 费时分析
 
+const smw = new SpeedMeasureWebpackPlugin();
 
 const thems = require('../theme.config') // 配置主题
 const VERSION = require('../version')
@@ -88,7 +91,7 @@ module.exports = env => {
               // use: 'babel-loader',
               exclude: /node_modules/,
               use: [
-                {
+                isDev && {
                   loader: 'thread-loader',
                   options: {
                     workers: 2 // 进程2个
@@ -137,7 +140,7 @@ module.exports = env => {
                     cacheDirectory: true,
                   }
                 }
-              ]
+              ].filter(Boolean)
             },
             {
               test: /\.(less|css)$/,
@@ -266,6 +269,8 @@ module.exports = env => {
           minifyURLs: true,
         }
       }),
+      // 打包文件分析工具
+      // !isDev && new BundleAnalyzerPlugin(),
       // new PurgeCssWebpackPlugin({
       //   paths: glob.sync("./src/**/*", {
       //     nodir: true
@@ -294,7 +299,9 @@ module.exports = env => {
   // 函数要返回配置文件，没返回会采用默认配置
   if (isDev) {
     return merge(base, dev); // 循环后面的配置 定义到前面去
+    // return smw.wrap(merge(base, dev)); // 循环后面的配置 定义到前面去
   } else {
     return merge(base, prod);
+    // return smw.wrap(merge(base, prod));
   }
 };
