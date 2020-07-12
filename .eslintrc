@@ -36,7 +36,9 @@
     "@typescript-eslint/no-use-before-define": 0, // fun在定义之前可以使用
     "arrow-parens": 0, // 箭头函数参数周围可以没有括号
     "consistent-return": 0, // 生成器方法的结尾可以不带返回值
-    "react/jsx-fragments": 0 // 可以使用<></>
+    "react/jsx-fragments": 0, // 可以使用<></>
+    "import/no-extraneous-dependencies": 0, // 额外的依赖
+    "no-plusplus": 0, // 可以使用一元运算符 ++ --
   },
   "settings": {
     "react": {

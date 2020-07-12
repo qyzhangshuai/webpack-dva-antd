@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Menu, Popover, Layout } from 'antd'
-import { UnorderedListOutlined, AppstoreOutlined, DownOutlined } from '@ant-design/icons'
+import { MenuOutlined, AppstoreOutlined, DownOutlined } from '@ant-design/icons'
 import styles from './Header.less'
 import Menus from './Menu'
 
@@ -15,14 +15,14 @@ interface MenuItem {
 }
 
 interface Props {
-  noBar?: boolean
+  noBar?: boolean // 这个表示没有显示菜单的那个按钮
   siderFold?: boolean
   isNavbar?: boolean
   menuPopoverVisible?: boolean
   user: any
   switchSider: () => void
   switchMenuPopover: () => void
-  onClickMenu: (e: { key: string }) => void
+  onClickMenu: (e: { key: string | number }) => void
   location: Location
   navOpenKeys: string[]
   changeOpenKeys: (openKeys: string[]) => void
@@ -74,7 +74,7 @@ const Header: FC<Props> = ({
                   className={styles.button}
                   onClick={switchSider}
                 >
-                  <UnorderedListOutlined />
+                  <MenuOutlined />
                 </div>
               )
           )

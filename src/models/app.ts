@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:33:34
- * @LastEditTime: 2020-07-05 17:44:04
+ * @LastEditTime: 2020-07-12 17:07:02
  * @LastEditors: zs
  */
 import { ReduxSagaEffects, DvaSetupParams, ReduxAction } from '@ts-types/dva';
@@ -47,6 +47,36 @@ export default modelExtend<AppState>({
         path: 'chat',
         component: '/zs/example',
         pid: 82,
+        cache: false,
+        hidden: false,
+        componentName: '-',
+        icon: 'chat',
+        children: null,
+        createTime: 1585195143000,
+        iframe: false,
+      },
+      {
+        id: 83,
+        name: '菜单',
+        sort: 232,
+        path: 'solution',
+        component: null,
+        pid: 0,
+        cache: false,
+        hidden: false,
+        componentName: '-',
+        icon: 'maillist',
+        children: null,
+        createTime: 1585195143000,
+        iframe: false,
+      },
+      {
+        id: 85,
+        name: '子菜单',
+        sort: 234,
+        path: 'chat1',
+        component: '/zs/sub',
+        pid: 83,
         cache: false,
         hidden: false,
         componentName: '-',
@@ -147,7 +177,7 @@ export default modelExtend<AppState>({
         yield put(
           routerRedux.push({
             // pathname: '/usercenter',
-            pathname: '/login',
+            pathname: '/zs/example',
           }),
         );
       }
@@ -163,20 +193,20 @@ export default modelExtend<AppState>({
   },
 
   reducers: {
-    // switchSider(state: AppState, { payload }) {
-    //   if (payload) {
-    //     storage.setItem(`${prefix}siderFold`, payload.siderFold);
-    //     return {
-    //       ...state,
-    //       siderFold: payload.siderFold
-    //     };
-    //   }
-    //   storage.setItem(`${prefix}siderFold`, !state.siderFold)
-    //   return {
-    //     ...state,
-    //     siderFold: !state.siderFold,
-    //   };
-    // },
+    switchSider(state: AppState, { payload }) {
+      if (payload) {
+        storage.setItem(`${prefix}siderFold`, payload.siderFold);
+        return {
+          ...state,
+          siderFold: payload.siderFold,
+        };
+      }
+      storage.setItem(`${prefix}siderFold`, !state.siderFold)
+      return {
+        ...state,
+        siderFold: !state.siderFold,
+      };
+    },
 
     // switchTheme(state: AppState) {
     //   storage.setItem(`${prefix}darkTheme`, !state.darkTheme)

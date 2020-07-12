@@ -2,11 +2,12 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-07-12 14:41:58
+ * @LastEditTime: 2020-07-12 15:48:16
  * @LastEditors: zs
  */
 import React from 'react';
 import { Input, Button, Select } from 'antd'
+import { connect } from 'dva'
 import storage from '@utils/storage'
 import * as config from '@config'
 import styles from './index.less'
@@ -17,10 +18,16 @@ interface LoginProps {
   [props: string]: any
 }
 
-const Login: React.SFC<LoginProps> = () => {
+// #----------- 上: ts类型定义 ----------- 分割线 ----------- 下: JS代码 -----------
+const namespace = 'login'
+
+const Login: React.SFC<LoginProps> = ({
+  dispatch,
+}) => {
   const handleLogin = () => {
     storage.setItem(`${prefix}-token`, 'zhangsan')
-    window.location.href = 'http://127.0.0.1:4009/usercenter'
+    // window.location.href = 'http://127.0.0.1:4009/usercenter'
+    dispatch({ type: `${namespace}/login` })
   }
   const handleChange = (value) => {
     console.log(`selected ${value}`);
@@ -41,10 +48,10 @@ const Login: React.SFC<LoginProps> = () => {
           {/* <div onClick={h}>123</div> */}
           <Option value="Yiminghe">yiminjjghehehe</Option>
         </Select>
-        <Button onClick={handleLogin}>登录11</Button>
+        <Button onClick={handleLogin}>登录11121</Button>
       </div>
     </>
   )
 }
 
-export default Login;
+export default connect(({ loading }) => ({ loading }))(Login)

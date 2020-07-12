@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:52:45
- * @LastEditTime: 2020-07-11 23:22:13
+ * @LastEditTime: 2020-07-12 16:00:17
  * @LastEditors: zs
  */
 /* global window */
@@ -159,6 +159,7 @@ const App: FC<Props> = ({
 
   const initLoading = useMemo(() => loading.effects['app/initialize'], [loading]);
 
+  // 例如：登录页面
   if (openFullscreenPages.includes(pathname)) {
     return (
       <div className={styles.app}>
@@ -168,6 +169,7 @@ const App: FC<Props> = ({
     );
   }
 
+  // 例如：修改密码页面
   if (openPagesOnlyHeader.includes(pathname)) {
     return (
       <div style={{ height: '100vh', overflow: 'hidden' }}>
@@ -181,8 +183,7 @@ const App: FC<Props> = ({
   return (
     <div>
       <Loader fullScreen spinning={initLoading} />
-      {/* <Layout className={classnames({ [styles.dark]: darkTheme, [styles.light]: !darkTheme })}> */}
-      <Layout>
+      <Layout className={classnames({ [styles.dark]: darkTheme, [styles.light]: !darkTheme })}>
         {!isNavbar && <MyLayout.Sider {...siderProps} />}
 
         <Layout
