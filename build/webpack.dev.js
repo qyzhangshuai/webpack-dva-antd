@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-10 22:57:49
+ * @LastEditTime: 2020-07-12 13:00:51
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -59,11 +59,11 @@ module.exports = {
 					`To create a production build, run ${chalk.cyan('npm run build')}`,
 				]
 			},
-			//  运行错误
-			onErrors: notifyOnErrors ? createNotifierCallback : undefined,
+			//  运行错误 
+			// onErrors: notifyOnErrors ? createNotifierCallback : undefined,
 			//是否每次编译之间清除控制台
 			//默认为true
-			clearConsole: true,
+			// clearConsole: true,
 		}),
 
 	],
@@ -75,7 +75,7 @@ module.exports = {
 		compress: true,// gzip 可以提升返回页面的速度
 		watchContentBase: true, // 监视 contentBase 目录下的所有文件，一旦文件变化就会 reload
 		contentBase: path.resolve(__dirname, '../dist'), // webpack启动服务会在dist目录下
-		// overlay: true,
+		// overlay: false,
 		overlay: {
 			warnings: false,
 			errors: true

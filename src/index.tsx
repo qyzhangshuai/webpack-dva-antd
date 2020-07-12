@@ -13,8 +13,8 @@ import { createBrowserHistory } from 'history'
 import { RootState } from '@ts-types/store';
 // import '@babel/polyfill'
 
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 // 1. Initialize
 const app = dva({
@@ -40,4 +40,3 @@ app.router(require('./router').default)
 
 // 4. Start
 app.start('#root')
-

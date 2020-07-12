@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-10 22:52:36
+ * @LastEditTime: 2020-07-12 13:19:37
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -128,7 +128,6 @@ module.exports = env => {
                         }
                       ],
                       "@babel/plugin-transform-runtime",
-
                     ],
                     // 开启babel缓存
                     // 第二次构建时，会读取之前的缓存

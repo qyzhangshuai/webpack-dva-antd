@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:52:45
- * @LastEditTime: 2020-06-27 21:53:12
+ * @LastEditTime: 2020-07-11 23:22:13
  * @LastEditors: zs
  */
 /* global window */
@@ -26,7 +26,6 @@ import Error from './error';
 import '../themes/index.less';
 import styles from './app.less';
 
-console.log('styles', styles);
 interface DispatchProps {
   dispatch: Dispatch;
 }

@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-07-10 22:55:39
+ * @LastEditTime: 2020-07-12 14:40:01
  * @LastEditors: zs
  */
 import React from 'react';
@@ -23,24 +23,25 @@ const Login: React.SFC<LoginProps> = () => {
     window.location.href = 'http://127.0.0.1:4009/usercenter'
   }
   const handleChange = (value) => {
-    console.log(`selected ${value}`, test);
+    console.log(`selected ${value}`, ss);
   }
 
+  // const cc = ccc
   return (
     <>
       <div>
-        <Input placeholder="请输入账号" />
-        <Input placeholder="请输入密码" />
+        <Input placeholder="请输入账号1" />
+        <Input placeholder="请输入密码1" />
         <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange}>
           <Option value="jack">Jack1</Option>
           <Option value="lucy">Lucy</Option>
           <Option value="disabled" disabled>
             Disabled
           </Option>
-          {/* <div onClick={h}>12</div> */}
-          <Option value="Yiminghe">yiminghehehe</Option>
+          {/* <div onClick={h}>123</div> */}
+          <Option value="Yiminghe">yiminjjghehehe</Option>
         </Select>
-        <Button onClick={handleLogin}>登录11</Button>
+        <Button onClick={handleLogin}>登录</Button>
       </div>
     </>
   )
