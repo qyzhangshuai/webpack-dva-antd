@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-12 15:10:42
+ * @LastEditTime: 2020-07-12 19:59:52
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -49,7 +49,10 @@ module.exports = env => {
   // env 是环境变量
   // let isDev = env.development;
   const base = {
-    entry: path.resolve(__dirname, "../src/index.tsx"),
+    entry: [
+      isDev && require.resolve('react-dev-utils/webpackHotDevClient'),
+      path.resolve(__dirname, "../src/index.tsx"),
+    ].filter(Boolean),
     output: {
       filename: isDev ? 'js/bundle.js' : 'js/[name].[contenthash:10].js',
       chunkFilename: isDev ? 'js/[name].chunk.js' : 'js/[name].[contenthash:10]_chunk.js', // 非入口chunk的名称
