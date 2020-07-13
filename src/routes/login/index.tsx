@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-07-13 11:39:28
+ * @LastEditTime: 2020-07-13 11:42:06
  * @LastEditors: zs
  */
 import React from 'react';
@@ -56,22 +56,6 @@ const Login: React.SFC<LoginProps> = ({
           <Option value="Yiminghe">yiminjjghehehe</Option>
         </Select>
         <Button onClick={handleLogin}>登录11</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>

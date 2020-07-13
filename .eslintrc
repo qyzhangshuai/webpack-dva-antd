@@ -41,6 +41,7 @@
     "no-plusplus": 0, // 可以使用一元运算符 ++ --
     "no-restricted-syntax": 0,
     "no-constant-condition": 0, // 可以使用常量作为条件值
+    "no-underscore-dangle": 0, // 可以使用 __这样的形式 window.__state = state
   },
   "settings": {
     "react": {
