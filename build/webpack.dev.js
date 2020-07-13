@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-12 19:55:09
+ * @LastEditTime: 2020-07-13 11:13:09
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -13,9 +13,11 @@ const webpack = require('webpack')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const notifier = require('node-notifier');
 const chalk = require('chalk')
-const { mockApiToApp } = require('mockjs-server-cli');
-const mockData = require('../mock.config.js');
 const { createNotifierCallback, getNetworkIp, newWorkUrl } = require('./utils')
+const { applyMock } = require('./utils/mock');
+
+// const { mockApiToApp } = require('mockjs-server-cli');
+// const mockData = require('../mock.config.js');
 
 const isHttps = false
 const notifyOnErrors = true
@@ -108,7 +110,12 @@ module.exports = {
 			}
 		},
 		before(app, server) {
-			mockApiToApp(app, mockData)
+			// mockApiToApp(app, mockData)
+			try {
+				applyMock(server);
+			} catch (e) {
+				console.log(e);
+			}
 		}
 
 	}

@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-07-12 23:48:48
+ * @LastEditTime: 2020-07-13 11:39:28
  * @LastEditors: zs
  */
 import React from 'react';
@@ -33,6 +33,14 @@ const Login: React.SFC<LoginProps> = ({
     console.log(`selected ${value}`);
   }
 
+  const q = () => {
+    fetch('/api/app/users3', {
+      method: 'POST',
+      // body: JSON.stringify(postData)
+    }).then(res => res.json()).then(res => {
+      console.log('res', res)
+    })
+  }
   return (
     <>
       <div>
@@ -48,7 +56,32 @@ const Login: React.SFC<LoginProps> = ({
           <Option value="Yiminghe">yiminjjghehehe</Option>
         </Select>
         <Button onClick={handleLogin}>登录11</Button>
-
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据</Button>
       </div>
     </>
   )

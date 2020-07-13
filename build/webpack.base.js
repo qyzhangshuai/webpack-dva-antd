@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-12 23:35:33
+ * @LastEditTime: 2020-07-13 11:40:56
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -91,12 +91,13 @@ module.exports = env => {
               // use: 'babel-loader',
               exclude: /node_modules/,
               use: [
-                isDev && {
-                  loader: 'thread-loader',
-                  options: {
-                    workers: 2 // 进程2个
-                  }
-                },
+                //  thread-loader需要适度使用，看编译速度再决定是否使用，本例不使用了，速度偏慢
+                // isDev && {
+                //   loader: 'thread-loader',
+                //   options: {
+                //     workers: 2 // 进程2个
+                //   }
+                // },
                 {
                   loader: 'babel-loader',
                   options: {
