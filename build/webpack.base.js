@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-13 11:40:56
+ * @LastEditTime: 2020-07-15 09:59:27
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -292,9 +292,8 @@ module.exports = env => {
       // 添加 进度条
       new WebpackBar(),
       // new webpack.NamedModulesPlugin(),
-      // moment.js是一个非常流行的库，由于webpack解释其代码的方式，默认情况下绑定大型区域设置文件。这是一个实用的解决方案，它要求用户选择导入特定的语言环境。
-      // 如果不使用，可以将其删除moment.js:
-      // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      //moment这个库中，如果引用了./locale/目录的内容，就忽略掉，不会打包进去
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ].filter(Boolean)
   };
   // 函数要返回配置文件，没返回会采用默认配置

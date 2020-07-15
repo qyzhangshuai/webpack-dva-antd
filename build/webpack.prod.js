@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-10 15:58:13
+ * @LastEditTime: 2020-07-15 09:29:20
  * @LastEditors: zs
  */
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -42,7 +42,7 @@ module.exports = {
                 },
             }), // 用了这个 js 也得手动压缩
             new TerserWebpackPlugin({
-                parallel: hasMultipleCores(),
+                // parallel: hasMultipleCores(), // 视情况而定，本项目开启，多用了5s左右，取消掉，并且create-react-app中也没有使用
                 // 启动source-map
                 sourceMap: shouldUseSourceMap,
                 terserOptions: {
@@ -96,7 +96,7 @@ module.exports = {
     // 只显示错误的情况+打包后的资源信息的显示
     stats: {
         all: false,
-        // errors: true,
+        errors: true,
         moduleTrace: true,
         logging: "error",
         assets: true,

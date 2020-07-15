@@ -2,13 +2,13 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:52:45
- * @LastEditTime: 2020-07-13 10:59:52
+ * @LastEditTime: 2020-07-15 10:08:19
  * @LastEditors: zs
  */
 /* global window */
 /* global document */
 import React, {
-  FC, ReactNode, CSSProperties, useEffect, useMemo,
+ FC, ReactNode, CSSProperties, useEffect, useMemo,
 } from 'react';
 import NProgress from 'nprogress';
 import { pathToRegexp } from 'path-to-regexp';
@@ -16,7 +16,6 @@ import { MapStateToProps } from 'react-redux';
 import { connect } from 'dva';
 import { Loader, MyLayout } from '@components';
 import { Layout } from 'antd';
-import classnames from 'classnames';
 import { withRouter } from 'dva/router';
 import { RootState } from '@ts-types/store';
 import { Dispatch } from '@ts-types/dva';
