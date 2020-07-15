@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-07-13 10:48:22
- * @LastEditTime: 2020-07-13 11:09:21
+ * @LastEditTime: 2020-07-15 11:40:59
  * @LastEditors: zs
  */
 const { existsSync } = require('fs');
@@ -12,14 +12,11 @@ const chalk = require('chalk');
 const proxy = require('http-proxy-middleware');
 const url = require('url');
 const bodyParser = require('body-parser');
-const getPaths = require('../getPaths');
+const { configFile, mockDir } = require('../paths');
 
 const debug = require('debug')('roadhog:mock');
 
 let error = null;
-const paths = getPaths(process.cwd());
-const configFile = paths.resolveApp('mock.config.js');
-const mockDir = paths.resolveApp('./mock/');
 
 function getConfig() {
   if (existsSync(configFile)) {

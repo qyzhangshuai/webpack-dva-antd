@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-15 09:59:27
+ * @LastEditTime: 2020-07-15 11:44:45
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -20,6 +20,10 @@ const chalk = require('chalk')
 const WebpackBar = require('webpackbar');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin'); // 费时分析
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+const { appNodeModules } = require('./paths')
 
 const smw = new SpeedMeasureWebpackPlugin();
 
@@ -99,7 +103,8 @@ module.exports = env => {
                 //   }
                 // },
                 {
-                  loader: 'babel-loader',
+                  // loader: 'babel-loader',
+                  loader: require.resolve('babel-loader'), // 原先是 loader: 'babel-loader'
                   options: {
                     "presets": [
                       [
@@ -245,7 +250,16 @@ module.exports = env => {
         'themes': `${__dirname}/../src/themes`,
       },
       extensions: ['.tsx', '.ts', ".js", '.jsx'],
+      plugins: [
+        PnpWebpackPlugin,
+      ],
     },
+    resolveLoader: {
+      plugins: [
+        PnpWebpackPlugin.moduleLoader(module),
+      ],
+    },
+
     plugins: [
       // 在每次打包之前 先清除dist目录下的文件
       !isDev && new MiniCssExtractPlugin({ // 如果是开发模式就不要使用抽离样式的插件
@@ -294,6 +308,13 @@ module.exports = env => {
       // new webpack.NamedModulesPlugin(),
       //moment这个库中，如果引用了./locale/目录的内容，就忽略掉，不会打包进去
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      // 此Webpack插件强制所有必需模块的完整路径与磁盘上实际路径的确切大小写相匹配
+      isDev && new CaseSensitivePathsPlugin(),
+
+      // 如果您需要一个丢失的模块，然后使用“npm install”命令，那么仍然需要
+      // 重新启动Web包的开发服务器以发现它。这个插件
+      // 使发现自动进行，因此您不必重新启动。
+      isDev && new WatchMissingNodeModulesPlugin(appNodeModules),
     ].filter(Boolean)
   };
   // 函数要返回配置文件，没返回会采用默认配置

@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-07-15 10:03:03
+ * @LastEditTime: 2020-07-15 11:45:36
  * @LastEditors: zs
  */
 import React from 'react';
@@ -65,8 +65,7 @@ const Login: React.SFC<LoginProps> = ({
         <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
+        {/* <div>{{}}</div> */}
         <div>{moment().weekday(1).format('YYYY-MM-DD')}</div>
         <div>{moment().format('E')}</div>
         <div>{moment().format('dddd')}</div>
