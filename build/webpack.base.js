@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-15 11:44:45
+ * @LastEditTime: 2020-07-16 12:23:50
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -23,7 +23,10 @@ const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin'); // �
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const { appNodeModules } = require('./paths')
+const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
+const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+
+const paths = require('./paths')
 
 const smw = new SpeedMeasureWebpackPlugin();
 
@@ -56,6 +59,8 @@ module.exports = env => {
   // env 是环境变量
   // let isDev = env.development;
   const base = {
+    // 生产环境一旦发现错误，立刻停止编译
+    bail: !isDev,
     entry: [
       isDev && require.resolve('react-dev-utils/webpackHotDevClient'),
       path.resolve(__dirname, "../src/index.tsx"),
@@ -144,6 +149,8 @@ module.exports = env => {
                     // 开启babel缓存
                     // 第二次构建时，会读取之前的缓存
                     cacheDirectory: true,
+                    cacheCompression: false,
+                    compact: !isDev,
                   }
                 }
               ].filter(Boolean)
@@ -252,10 +259,13 @@ module.exports = env => {
       extensions: ['.tsx', '.ts', ".js", '.jsx'],
       plugins: [
         PnpWebpackPlugin,
+        // 防止用户从src/（或node_modules/）外部导入文件。
+        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
       ],
     },
     resolveLoader: {
       plugins: [
+        // 也与即插即用有关，但这次它告诉webpack加载加载程序从当前包中。
         PnpWebpackPlugin.moduleLoader(module),
       ],
     },
@@ -305,16 +315,18 @@ module.exports = env => {
       // }),
       // 添加 进度条
       new WebpackBar(),
-      // new webpack.NamedModulesPlugin(),
+      // 是在热加载时直接返回更新文件名，而不是文件的id。
+      new webpack.NamedModulesPlugin(),
       //moment这个库中，如果引用了./locale/目录的内容，就忽略掉，不会打包进去
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // 此Webpack插件强制所有必需模块的完整路径与磁盘上实际路径的确切大小写相匹配
       isDev && new CaseSensitivePathsPlugin(),
-
       // 如果您需要一个丢失的模块，然后使用“npm install”命令，那么仍然需要
       // 重新启动Web包的开发服务器以发现它。这个插件
       // 使发现自动进行，因此您不必重新启动。
-      isDev && new WatchMissingNodeModulesPlugin(appNodeModules),
+      isDev && new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+      // 这为模块未发现错误提供了必要的上下文，例如请求资源。
+      new ModuleNotFoundPlugin(paths.appPath),
     ].filter(Boolean)
   };
   // 函数要返回配置文件，没返回会采用默认配置
