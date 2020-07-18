@@ -5,6 +5,24 @@
  * @LastEditTime: 2020-07-18 12:00:31
  * @LastEditors: zs
 --> 
+## 技术栈说明
+
+> react + antd + webpack4.0 + eslint + typeScript + less
+
+## 开发
+
+```js
+// 开发环境启动
+npm run start 或者 yarn start
+
+// 生产环境打包
+npm run build 或者 yarn build
+```
+
+
+
+
+
 ## 初始化项目
 ```js
 npm init -y
