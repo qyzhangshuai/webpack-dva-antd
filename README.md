@@ -21,8 +21,6 @@ npm run build 或者 yarn build
 
 
 
-
-
 ## 初始化项目
 ```js
 npm init -y
