@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:33:34
- * @LastEditTime: 2020-07-12 19:03:05
+ * @LastEditTime: 2020-07-18 10:16:09
  * @LastEditors: zs
  */
 import { ReduxSagaEffects, DvaSetupParams, ReduxAction } from '@ts-types/dva';
@@ -159,15 +159,15 @@ export default modelExtend<AppState>({
         menuList,
         defaultMenu: menuList[1],
       }
-      const user = {
-        id: '12',
-      }
+      // const user = {
+      //   id: '12',
+      // }
 
       const defaultMenu: any = menuResult.defaultMenu || findFirstMenuItem(menuList);
       yield put({
         type: 'updateState',
         payload: {
-          user,
+          // user,
           menu: menuList,
           defaultMenu,
           defaultOpenKeys: getDefaultOpenKeys(menuList),

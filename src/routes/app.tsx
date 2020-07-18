@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 12:52:45
- * @LastEditTime: 2020-07-15 10:08:19
+ * @LastEditTime: 2020-07-18 11:32:28
  * @LastEditors: zs
  */
 /* global window */
@@ -48,7 +48,7 @@ type Props = StateProps & DispatchProps & OwnProps & RouterProps;
 
 const { Content } = Layout;
 const { Header } = MyLayout;
-
+console.log('window.location.origin', window.location)
 const contentStyle: CSSProperties = {
   position: 'relative',
   overflowX: 'hidden',

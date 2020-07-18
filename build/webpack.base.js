@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-16 17:38:20
+ * @LastEditTime: 2020-07-18 11:01:28
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -25,15 +25,18 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const postcssNormalize = require('postcss-normalize');
 
 const paths = require('./paths')
 
 const smw = new SpeedMeasureWebpackPlugin();
 
-const thems = require('../theme.config') // 配置主题
+const theme = require('../theme.config') // 配置主题
 const VERSION = require('../version')
-
 const ENV = process.env.ENV;
+const imageInlineSizeLimit = parseInt(
+  process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
+);
 
 let publicPath = '';
 let isDev = false
@@ -54,6 +57,9 @@ switch (ENV) {
   default:
     break;
 }
+
+const cssRegex = /\.css$/;
+const lessRegex = /\.less$/;
 
 module.exports = env => {
   // env 是环境变量
@@ -155,69 +161,56 @@ module.exports = env => {
                 }
               ].filter(Boolean)
             },
-            {
-              test: /\.(less|css)$/,
-              exclude: /node_modules/, // 对除了node_modules外的文件进行模块化
-              use: [ // 是不是开发环境 如果是就用style-loader
-                isDev ? "style-loader" : {
-                  loader: MiniCssExtractPlugin.loader,
-                  options: {
-                    publicPath: '../',
-                  }
-                },
-                {
-                  loader: "css-loader",
-                  options: {
-                    // 给loader传递参数
-                    // 如果css文件引入其他文件@import
-                    importLoaders: 2,
-                    modules: {
-                      localIdentName: '[name]__[local]_[hash:base64:5]',
-                    }, // css模块化
-                    // sourceMap: true
-                  }
-                },
-                "postcss-loader",
-                {
-                  loader: "less-loader",
-                  options: {
-                    lessOptions: { // 如果使用less-loader@5，请移除 lessOptions 这一级直接配置选项。配置antd主题
-                      modifyVars: thems(),
-                      javascriptEnabled: true, // 开启配置主题
-                    },
-                  }
-                }
-              ]
-            },
-            {
-              test: /\.(less|css)$/,
-              exclude: /src/, // 这是为了antd的，不让antd进行模块化
-              use: [
-                isDev ? "style-loader" : {
-                  loader: MiniCssExtractPlugin.loader,
-                  options: {
-                    publicPath: '../',
-                  }
-                },
-                {
-                  loader: "css-loader",
-                  options: {
-                    importLoaders: 2,
-                  }
-                },
-                "postcss-loader",
-                {
-                  loader: "less-loader",
-                  options: {
-                    lessOptions: {
-                      modifyVars: thems(),
-                      javascriptEnabled: true,
-                    }
-                  }
-                }
-              ]
-            },
 
+            {
+              test: cssRegex,
+              exclude: /src/,
+              use: getStyleLoaders({
+                importLoaders: 1,
+              }),
+              sideEffects: true,
+            },
+            {
+              test: cssRegex,
+              exclude: /node_modules/,
+              use: getStyleLoaders({
+                importLoaders: 2,
+                modules: {  // css模块化
+                  localIdentName: '[name]__[local]_[hash:base64:5]',
+                },
+              }),
+            },
+            {
+              test: lessRegex,
+              exclude: /src/,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 2,
+                },
+                {
+                  // 如果使用less-loader@5，请移除 lessOptions 这一级直接配置选项。配置antd主题
+                  modifyVars: theme(),
+                  javascriptEnabled: true, // 开启配置主题
+                }
+              ),
+              sideEffects: true,
+            },
+            {
+              test: lessRegex,
+              exclude: /node_modules/,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 2,
+                  modules: {
+                    localIdentName: '[name]__[local]_[hash:base64:5]',
+                  },
+                },
+                {
+                  modifyVars: theme(),
+                  javascriptEnabled: true,
+                }
+              ),
+            },
             { // 图标的转化
               test: /\.(woff|woff2|eot|ttf|otf)$/,
               loader: 'file-loader',
@@ -229,14 +222,11 @@ module.exports = env => {
               test: /\.(jpe?g|png|gif|svg|bmp)$/,
               use: {
                 loader: 'url-loader',
-                // 如果大于100k的图片 会使用file-loader
                 options: {
                   name: "image/[contentHash].[ext]",
-                  limit: 1024
+                  limit: imageInlineSizeLimit
                 }
               }
-              // file-loader 默认的功能是拷贝的作用
-              // 我希望当前比较小的图片可以转化成 base64 比以前大，好处就是不用发送http请求
             }
           ]
         }
@@ -254,6 +244,7 @@ module.exports = env => {
         '@hooks': `${__dirname}/../src/hooks`,
         '@ts-types': `${__dirname}/../src/ts-types`,
         '@enums': `${__dirname}/../src/utils/enums`,
+        '@assets': `${__dirname}/../src/assets`,
         'themes': `${__dirname}/../src/themes`,
       },
       extensions: ['.tsx', '.ts', ".js", '.jsx'],
@@ -271,7 +262,6 @@ module.exports = env => {
     },
 
     plugins: [
-      // 在每次打包之前 先清除dist目录下的文件
       !isDev && new MiniCssExtractPlugin({ // 如果是开发模式就不要使用抽离样式的插件
         filename: 'css/[name].[contenthash:10].css',
         chunkFilename: 'css/[id].[contenthash:10].css',
@@ -329,12 +319,57 @@ module.exports = env => {
       new ModuleNotFoundPlugin(paths.appPath),
     ].filter(Boolean)
   };
-  // 函数要返回配置文件，没返回会采用默认配置
   if (isDev) {
-    return merge(base, dev); // 循环后面的配置 定义到前面去
-    // return smw.wrap(merge(base, dev)); // 循环后面的配置 定义到前面去
+    return merge(base, dev);
+    // return smw.wrap(merge(base, dev)); 
   } else {
     return merge(base, prod);
     // return smw.wrap(merge(base, prod));
   }
+};
+
+const getStyleLoaders = (cssOptions, preProcessor = {}) => {
+  const loaders = [
+    isDev ? "style-loader" : {
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        publicPath: '../',
+      }
+    },
+    {
+      loader: "css-loader",
+      options: cssOptions,
+    },
+    {
+      loader: require.resolve('postcss-loader'),
+      options: {
+        // 外部CSS导入工作所必需的
+        ident: 'postcss',
+        plugins: () => [
+          // 修复flex相关的bug
+          require('postcss-flexbugs-fixes'),
+          // PostCSS Preset Env使您可以将现代CSS转换为大多数浏览器可以理解的内容，并根据目标浏览器或运行时环境确定所需的polyfill。
+          require('postcss-preset-env')({
+            autoprefixer: {
+              flexbox: 'no-2009',
+            },
+            stage: 3,
+          }),
+          postcssNormalize(),
+        ],
+      },
+    },
+
+  ].filter(Boolean);
+  if (preProcessor) {
+    loaders.push(
+      {
+        loader: "less-loader",
+        options: {
+          lessOptions: preProcessor,
+        }
+      }
+    );
+  }
+  return loaders;
 };

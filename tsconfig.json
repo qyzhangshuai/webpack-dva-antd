@@ -60,6 +60,12 @@
       "@hooks": [
         "hooks",
       ],
+      "@assets/*": [
+        "assets/*",
+      ],
+      "@assets": [
+        "assets",
+      ],
     }
   },
   "exclude": [

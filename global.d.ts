@@ -2,7 +2,7 @@
  * @description: 全局配置
  * @author: zs
  * @Date: 2020-06-11 16:43:01
- * @LastEditTime: 2020-06-25 19:05:35
+ * @LastEditTime: 2020-07-18 11:29:03
  * @LastEditors: zs
  */
 declare module '*.css' {
@@ -23,6 +23,30 @@ declare module '*.less' {
 }
 
 declare module '*.json' {
+  const content: any;
+  export default content;
+}
+declare module '*.jpg' {
+  const content: any;
+  export default content;
+}
+declare module '*.jpge' {
+  const content: any;
+  export default content;
+}
+declare module '*.png' {
+  const content: any;
+  export default content;
+}
+declare module '*.gif' {
+  const content: any;
+  export default content;
+}
+declare module '*.svg' {
+  const content: any;
+  export default content;
+}
+declare module '*.bmp' {
   const content: any;
   export default content;
 }
