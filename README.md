@@ -7,7 +7,7 @@
 --> 
 ## 技术栈说明
 
-> react + antd + webpack4.0 + eslint + typeScript + less
+> react(16.9) + antd4.x + webpack4.0 + eslint + typeScript + less
 
 ## 开发
 
