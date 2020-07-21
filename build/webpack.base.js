@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-18 11:01:28
+ * @LastEditTime: 2020-07-21 22:29:12
  * @LastEditors: zs
  */
 const dev = require("./webpack.dev");
@@ -102,7 +102,7 @@ module.exports = env => {
         {
           oneOf: [
             { // 解析js文件 默认会调用@babel/core 
-              test: /\.(js|jsx|ts|tsx|ejs)$/,
+              test: /\.(js|jsx|ts|tsx)$/,
               // use: 'babel-loader',
               exclude: /node_modules/,
               use: [
