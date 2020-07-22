@@ -2,21 +2,24 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-18 10:26:30
- * @LastEditors: zs
+ * @LastEditTime 2020-07-22 16:31:19
+ * @LastEditors ronffy
  */
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const merge = require('webpack-merge');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const { hasMultipleCores } = require('./utils')
+const configFactory = require('./webpack.base')
 
 const shouldUseSourceMap = false;
-module.exports = {
+const config = configFactory('production');
+
+module.exports = merge(config, {
     mode: 'production',
-    devtool: shouldUseSourceMap ? 'source-map' : 'none', // 控制js的map文件
-    devtool: 'none',
+    devtool: shouldUseSourceMap ? 'hidden-source-map' : 'none', // 控制js的map文件
     optimization: { // 优化项
         splitChunks: {
             chunks: 'all',
@@ -98,7 +101,7 @@ module.exports = {
         all: false,
         errors: true,
         moduleTrace: true,
-        logging: "error",
+        logging: 'error',
         assets: true,
     },
-}
+})
