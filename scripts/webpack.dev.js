@@ -2,22 +2,27 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-18 10:20:43
- * @LastEditors: zs
+ * @LastEditTime 2020-07-22 17:01:00
+ * @LastEditors ronffy
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
 // const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const path = require('path');
 const fs = require('fs')
 const webpack = require('webpack')
+const merge = require('webpack-merge');
+const WebpackDevServer = require('webpack-dev-server');
+const openBrowser = require('react-dev-utils/openBrowser');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
 const notifier = require('node-notifier');
 const chalk = require('chalk')
 const { createNotifierCallback, getNetworkIp, newWorkUrl } = require('./utils')
 const { applyMock } = require('./utils/mock');
+const createDevServerConfig = require('./webpackDevServer.config');
+const configFactory = require('./webpack.base');
 
-// const { mockApiToApp } = require('mockjs-server-cli');
-// const mockData = require('../mock.config.js');
+const config = configFactory('development');
 
 const isHttps = false
 const notifyOnErrors = true
@@ -29,9 +34,17 @@ if (PORT) {
 	port = PORT
 }
 
-module.exports = {
+const protocol = isHttps === 'true' ? 'https' : 'http';
+
+const urls = prepareUrls(
+	protocol,
+	host,
+	port,
+);
+
+const compiler = webpack(merge(config, {
 	mode: 'development',
-	devtool: 'cheap-module-source-map',
+	devtool: 'cheap-module-eval-source-map',
 	watchOptions: {
 		ignored: /node_modules/
 	},
@@ -52,7 +65,7 @@ module.exports = {
 		new FriendlyErrorsWebpackPlugin({
 			compilationSuccessInfo: {
 				messages: [
-					`App running at:`,
+					'App running at:',
 					`- Local:   ${chalk.cyan(newWorkUrl(isHttps, host, port))}`,
 					`- Network: ${chalk.cyan(newWorkUrl(isHttps, getNetworkIp(), port))}`,
 				],
@@ -63,62 +76,39 @@ module.exports = {
 			},
 			//  运行错误 
 			// onErrors: notifyOnErrors ? createNotifierCallback : undefined,
-			//是否每次编译之间清除控制台
-			//默认为true
+			// 是否每次编译之间清除控制台
+			// 默认为true
 			// clearConsole: true,
 		}),
 
 	],
-	devServer: { // 开发服务的配置 
-		host,
-		https: isHttps,
-		port,
-		open: true,
-		compress: true,// gzip 可以提升返回页面的速度
-		watchContentBase: true, // 监视 contentBase 目录下的所有文件，一旦文件变化就会 reload
-		contentBase: path.resolve(__dirname, '../dist'), // webpack启动服务会在dist目录下
-		overlay: false,
-		// overlay: {
-		// 	warnings: false,
-		// 	errors: true
-		// },
-		// 除了一些基本启动信息以外，其他内容都不要显示
-		quiet: true,
-		hot: true,
+}));
 
-		// Use 'ws' instead of 'sockjs-node' on server since we're using native
-		// websockets in `webpackHotDevClient`.
-		transportMode: 'ws',
-		injectClient: false,
-		
-		// progress: true, //显示打包的进度
-		historyApiFallback: true, // 在devServer里面有个historyApiFallback的属性，是用于如果找不到界面就返回默认首页，上线时需要使用nginx
-		disableHostCheck: true, //  新增该配置项
-		proxy: {
-			// 一旦devServer(5000)服务器接受到 /api/xxx 的请求，就会把请求转发到另外一个服务器(3000)
-			'/api': {
-				target: `http://${host}:${port}`,
-				changeOrigin: true,
-				// 发送请求时，请求路径重写：将 /api/xxx --> /xxx （去掉/api）
-				pathRewrite: {
-					'^/api': ''
-				}
-			},
-			bypass(req) {
-				if (req.headers.accept.indexOf('html') !== -1) {
-					return '/index.html'
-				}
-			}
-		},
-		before(app, server) {
-			// mockApiToApp(app, mockData)
-			try {
-				applyMock(server);
-			} catch (e) {
-				console.log(e);
-			}
-		}
+const serverConfig = createDevServerConfig(
+	host,
+	port,
+	isHttps,
+);
 
+const devServer = new WebpackDevServer(compiler, serverConfig);
+
+devServer.listen(port, host, err => {
+	if (err) {
+		return console.log(err);
 	}
-}
 
+	// We used to support resolving modules according to `NODE_PATH`.
+	// This now has been deprecated in favor of jsconfig/tsconfig.json
+	// This lets you use absolute paths in imports inside large monorepos:
+	if (process.env.NODE_PATH) {
+		console.log(
+			chalk.yellow(
+				'Setting NODE_PATH to resolve modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using TypeScript) and will be removed in a future major release of create-react-app.'
+			)
+		);
+		console.log();
+	}
+
+	console.log(chalk.cyan('Starting the development server...\n'));
+	openBrowser(urls.localUrlForBrowser);
+});

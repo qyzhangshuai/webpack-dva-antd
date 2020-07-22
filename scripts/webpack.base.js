@@ -2,14 +2,11 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-21 22:29:12
- * @LastEditors: zs
+ * @LastEditTime 2020-07-22 16:39:51
+ * @LastEditors ronffy
  */
-const dev = require("./webpack.dev");
-const prod = require("./webpack.prod");
-const path = require("path");
-const merge = require("webpack-merge");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const PurgeCssWebpackPlugin = require('purgecss-webpack-plugin');
@@ -20,7 +17,7 @@ const chalk = require('chalk')
 const WebpackBar = require('webpackbar');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin'); // 费时分析
-const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
@@ -33,49 +30,87 @@ const smw = new SpeedMeasureWebpackPlugin();
 
 const theme = require('../theme.config') // 配置主题
 const VERSION = require('../version')
-const ENV = process.env.ENV;
+
 const imageInlineSizeLimit = parseInt(
-  process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
+  process.env.IMAGE_INLINE_SIZE_LIMIT || '10000',
 );
-
-let publicPath = '';
-let isDev = false
-switch (ENV) {
-  case 'production':
-  case 'pre':
-    isDev = false
-    publicPath = '/'
-    break;
-  case 'test':
-    isDev = false
-    publicPath = 'CDN';
-    break;
-  case 'development':
-    isDev = true
-    publicPath = '/';
-    break;
-  default:
-    break;
-}
-
 const cssRegex = /\.css$/;
 const lessRegex = /\.less$/;
 
 module.exports = env => {
-  // env 是环境变量
-  // let isDev = env.development;
+  let publicPath = '';
+  let isDev = false
+  switch (env) {
+    case 'production':
+      isDev = false
+      publicPath = 'CDN'
+      break;
+    case 'development':
+      isDev = true
+      publicPath = '/';
+      break;
+    default:
+      break;
+  }
+
+  const getStyleLoaders = (cssOptions, preProcessor = {}) => {
+    const loaders = [
+      isDev ? 'style-loader' : {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          publicPath: '../',
+        }
+      },
+      {
+        loader: 'css-loader',
+        options: cssOptions,
+      },
+      {
+        loader: require.resolve('postcss-loader'),
+        options: {
+          // 外部CSS导入工作所必需的
+          ident: 'postcss',
+          plugins: () => [
+            // 修复flex相关的bug
+            require('postcss-flexbugs-fixes'),
+            // PostCSS Preset Env使您可以将现代CSS转换为大多数浏览器可以理解的内容，并根据目标浏览器或运行时环境确定所需的polyfill。
+            require('postcss-preset-env')({
+              autoprefixer: {
+                flexbox: 'no-2009',
+              },
+              stage: 3,
+            }),
+            postcssNormalize(),
+          ],
+        },
+      },
+
+    ].filter(Boolean);
+    if (preProcessor) {
+      loaders.push(
+        {
+          loader: 'less-loader',
+          options: {
+            lessOptions: preProcessor,
+          }
+        }
+      );
+    }
+    return loaders;
+  };
+
   const base = {
     // 生产环境一旦发现错误，立刻停止编译
     bail: !isDev,
     entry: [
       isDev && require.resolve('react-dev-utils/webpackHotDevClient'),
-      path.resolve(__dirname, "../src/index.tsx"),
+      path.resolve(__dirname, '../src/index.tsx'),
     ].filter(Boolean),
     output: {
       filename: isDev ? 'js/bundle.js' : 'js/[name].[contenthash:10].js',
       chunkFilename: isDev ? 'js/[name].chunk.js' : 'js/[name].[contenthash:10]_chunk.js', // 非入口chunk的名称
-      path: path.resolve(__dirname, "../dist"),
-      publicPath: publicPath
+      path: path.resolve(__dirname, '../dist'),
+      publicPath
     },
     performance: {
       hints: false
@@ -117,40 +152,40 @@ module.exports = env => {
                   // loader: 'babel-loader',
                   loader: require.resolve('babel-loader'), // 原先是 loader: 'babel-loader'
                   options: {
-                    "presets": [
+                    'presets': [
                       [
-                        "@babel/preset-env",
+                        '@babel/preset-env',
                         {
-                          "useBuiltIns": "entry",
+                          'useBuiltIns': 'entry',
                           // "useBuiltIns": "usage",
-                          "corejs": 3,
+                          'corejs': 3,
                         },
                       ],
-                      "@babel/preset-react",
-                      "@babel/preset-typescript",
+                      '@babel/preset-react',
+                      '@babel/preset-typescript',
                     ],
-                    "plugins": [
+                    'plugins': [
                       [
-                        "import",
+                        'import',
                         {
-                          "libraryName": "antd",
-                          "libraryDirectory": "lib",
-                          "style": true
+                          'libraryName': 'antd',
+                          'libraryDirectory': 'lib',
+                          'style': true
                         }
                       ],
                       [
-                        "@babel/plugin-proposal-decorators",
+                        '@babel/plugin-proposal-decorators',
                         {
-                          "legacy": true
+                          'legacy': true
                         }
                       ],
                       [
-                        "@babel/plugin-proposal-class-properties",
+                        '@babel/plugin-proposal-class-properties',
                         {
-                          "loose": true
+                          'loose': true
                         }
                       ],
-                      "@babel/plugin-transform-runtime",
+                      '@babel/plugin-transform-runtime',
                     ],
                     // 开启babel缓存
                     // 第二次构建时，会读取之前的缓存
@@ -175,7 +210,7 @@ module.exports = env => {
               exclude: /node_modules/,
               use: getStyleLoaders({
                 importLoaders: 2,
-                modules: {  // css模块化
+                modules: { // css模块化
                   localIdentName: '[name]__[local]_[hash:base64:5]',
                 },
               }),
@@ -215,7 +250,7 @@ module.exports = env => {
               test: /\.(woff|woff2|eot|ttf|otf)$/,
               loader: 'file-loader',
               options: {
-                name: "image/[contentHash].[ext]",
+                name: 'image/[contentHash].[ext]',
               }
             },
             { // 图片的转化
@@ -223,7 +258,7 @@ module.exports = env => {
               use: {
                 loader: 'url-loader',
                 options: {
-                  name: "image/[contentHash].[ext]",
+                  name: 'image/[contentHash].[ext]',
                   limit: imageInlineSizeLimit
                 }
               }
@@ -247,7 +282,7 @@ module.exports = env => {
         '@assets': `${__dirname}/../src/assets`,
         'themes': `${__dirname}/../src/themes`,
       },
-      extensions: ['.tsx', '.ts', ".js", '.jsx'],
+      extensions: ['.tsx', '.ts', '.js', '.jsx'],
       plugins: [
         PnpWebpackPlugin,
         // 防止用户从src/（或node_modules/）外部导入文件。
@@ -268,8 +303,8 @@ module.exports = env => {
         ignoreOrder: true,
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "../public/index.html"),
-        filename: "index.html",
+        template: path.resolve(__dirname, '../public/index.html'),
+        filename: 'index.html',
         inject: true,
         minify: !isDev && { // 代表开发环境不要压缩，如果是生产环境则压缩
           removeComments: true,
@@ -293,7 +328,7 @@ module.exports = env => {
       // }),
       // 这个插件是用来定义全局变量的
       new webpack.DefinePlugin({
-        'process.env.ENV': JSON.stringify(ENV),
+        'process.env.ENV': JSON.stringify(env),
         'process.env.VERSION': JSON.stringify(VERSION),
       }),
       // 添加 进度条 二选一
@@ -307,7 +342,7 @@ module.exports = env => {
       new WebpackBar(),
       // 是在热加载时直接返回更新文件名，而不是文件的id。
       new webpack.NamedModulesPlugin(),
-      //moment这个库中，如果引用了./locale/目录的内容，就忽略掉，不会打包进去
+      // moment这个库中，如果引用了./locale/目录的内容，就忽略掉，不会打包进去
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // 此Webpack插件强制所有必需模块的完整路径与磁盘上实际路径的确切大小写相匹配
       isDev && new CaseSensitivePathsPlugin(),
@@ -319,57 +354,6 @@ module.exports = env => {
       new ModuleNotFoundPlugin(paths.appPath),
     ].filter(Boolean)
   };
-  if (isDev) {
-    return merge(base, dev);
-    // return smw.wrap(merge(base, dev)); 
-  } else {
-    return merge(base, prod);
-    // return smw.wrap(merge(base, prod));
-  }
-};
 
-const getStyleLoaders = (cssOptions, preProcessor = {}) => {
-  const loaders = [
-    isDev ? "style-loader" : {
-      loader: MiniCssExtractPlugin.loader,
-      options: {
-        publicPath: '../',
-      }
-    },
-    {
-      loader: "css-loader",
-      options: cssOptions,
-    },
-    {
-      loader: require.resolve('postcss-loader'),
-      options: {
-        // 外部CSS导入工作所必需的
-        ident: 'postcss',
-        plugins: () => [
-          // 修复flex相关的bug
-          require('postcss-flexbugs-fixes'),
-          // PostCSS Preset Env使您可以将现代CSS转换为大多数浏览器可以理解的内容，并根据目标浏览器或运行时环境确定所需的polyfill。
-          require('postcss-preset-env')({
-            autoprefixer: {
-              flexbox: 'no-2009',
-            },
-            stage: 3,
-          }),
-          postcssNormalize(),
-        ],
-      },
-    },
-
-  ].filter(Boolean);
-  if (preProcessor) {
-    loaders.push(
-      {
-        loader: "less-loader",
-        options: {
-          lessOptions: preProcessor,
-        }
-      }
-    );
-  }
-  return loaders;
-};
+  return base;
+}

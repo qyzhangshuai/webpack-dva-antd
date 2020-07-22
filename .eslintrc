@@ -42,6 +42,11 @@
     "no-restricted-syntax": 0,
     "no-constant-condition": 0, // 可以使用常量作为条件值
     "no-underscore-dangle": 0, // 可以使用 __这样的形式 window.__state = state
+    "radix": 0,
+    "comma-dangle": 0,
+    "quote-props": 0,
+    "no-trailing-spaces": 0,
+    "global-require": 0
   },
   "settings": {
     "react": {
