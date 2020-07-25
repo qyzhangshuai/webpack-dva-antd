@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-07-18 11:45:40
+ * @LastEditTime: 2020-07-25 18:16:43
  * @LastEditors: zs
  */
 import React from 'react';
@@ -36,7 +36,7 @@ const Login: React.SFC<LoginProps> = ({
   }
 
   const q = () => {
-    fetch('/api/app/users3', {
+    fetch('/proxy/app/users3', {
       method: 'POST',
       // body: JSON.stringify(postData)
     }).then(res => res.json()).then(res => {
@@ -47,8 +47,8 @@ const Login: React.SFC<LoginProps> = ({
   return (
     <>
       <div className={styles.login}>
-        <Input placeholder="请输入账号1" />
-        <Input placeholder="请输入密码1" />
+        <Input placeholder="请输入账号" />
+        <Input placeholder="请输入密码" />
         <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange}>
           <Option value="jack">Jack1</Option>
           <Option value="lucy">Lucy</Option>
@@ -65,6 +65,7 @@ const Login: React.SFC<LoginProps> = ({
         <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>
+        {/* <div>{{}}</div> */}
         <img src={yay} alt="" style={{ width: 100, display: 'block' }} />
         <div>验证moment中国化</div>
         <div>{moment().weekday(1).format('YYYY-MM-DD')}</div>

@@ -2,8 +2,8 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime 2020-07-22 17:01:00
- * @LastEditors ronffy
+ * @LastEditTime: 2020-07-25 17:51:19
+ * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
 // const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
@@ -91,7 +91,11 @@ const serverConfig = createDevServerConfig(
 );
 
 const devServer = new WebpackDevServer(compiler, serverConfig);
-
+try {
+	applyMock(devServer);
+} catch (e) {
+	console.log(e);
+}
 devServer.listen(port, host, err => {
 	if (err) {
 		return console.log(err);
