@@ -2,8 +2,8 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime 2020-07-22 16:39:51
- * @LastEditors ronffy
+ * @LastEditTime: 2020-07-28 14:13:07
+ * @LastEditors: zs
  */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -38,15 +38,13 @@ const cssRegex = /\.css$/;
 const lessRegex = /\.less$/;
 
 module.exports = env => {
+  const isDev = env === 'development'
   let publicPath = '';
-  let isDev = false
   switch (env) {
     case 'production':
-      isDev = false
       publicPath = 'CDN'
       break;
     case 'development':
-      isDev = true
       publicPath = '/';
       break;
     default:
