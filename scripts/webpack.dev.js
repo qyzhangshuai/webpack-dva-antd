@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-25 17:51:19
+ * @LastEditTime: 2020-07-28 14:11:42
  * @LastEditors: zs
  */
 // const DllReferencePlugin = require('webpack').DllReferencePlugin;
@@ -22,7 +22,7 @@ const { applyMock } = require('./utils/mock');
 const createDevServerConfig = require('./webpackDevServer.config');
 const configFactory = require('./webpack.base');
 
-const config = configFactory('development');
+const config = configFactory(process.env.ENV || 'development');
 
 const isHttps = false
 const notifyOnErrors = true

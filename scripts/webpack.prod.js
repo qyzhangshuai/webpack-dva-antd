@@ -2,8 +2,8 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime 2020-07-22 16:31:19
- * @LastEditors ronffy
+ * @LastEditTime: 2020-07-28 14:11:55
+ * @LastEditors: zs
  */
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const merge = require('webpack-merge');
@@ -15,7 +15,7 @@ const { hasMultipleCores } = require('./utils')
 const configFactory = require('./webpack.base')
 
 const shouldUseSourceMap = false;
-const config = configFactory('production');
+const config = configFactory(process.env.ENV || 'production');
 
 module.exports = merge(config, {
     mode: 'production',
