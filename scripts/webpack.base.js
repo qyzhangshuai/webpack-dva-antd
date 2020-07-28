@@ -2,7 +2,7 @@
  * @description: 
  * @author: zs
  * @Date: 2020-06-10 18:09:18
- * @LastEditTime: 2020-07-28 14:13:07
+ * @LastEditTime: 2020-07-28 14:26:09
  * @LastEditors: zs
  */
 const path = require('path');
@@ -122,16 +122,16 @@ module.exports = env => {
       // 解析的css的时候 就不能渲染dom
       // css 可以并行和js 一同加载 mini-css-extract-plugin
       rules: [
-        {
-          test: /\.(js|jsx|ts|tsx)$/,
-          loader: 'eslint-loader',
-          enforce: 'pre', // 编译前检查
-          exclude: /node_modules/, // 不检测的文件
-          include: [path.resolve(__dirname, '../src')], // 要检查的目录
-          options: {
-            fix: true
-          }
-        },
+        // {
+        //   test: /\.(js|jsx|ts|tsx)$/,
+        //   loader: 'eslint-loader',
+        //   enforce: 'pre', // 编译前检查
+        //   exclude: /node_modules/, // 不检测的文件
+        //   include: [path.resolve(__dirname, '../src')], // 要检查的目录
+        //   options: {
+        //     fix: true
+        //   }
+        // },
         {
           oneOf: [
             { // 解析js文件 默认会调用@babel/core 
