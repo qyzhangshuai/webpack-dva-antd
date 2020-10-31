@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-10-31 15:57:19
+ * @LastEditTime: 2020-10-31 16:31:05
  * @LastEditors: zs
  */
 import React from 'react';
@@ -26,6 +26,7 @@ const namespace = 'login'
 const Login: React.SFC<LoginProps> = ({
   dispatch,
 }) => {
+  
   const handleLogin = () => {
     storage.setItem(`${prefix}-token`, 'zhangsan')
     // window.location.href = 'http://127.0.0.1:4009/usercenter'
