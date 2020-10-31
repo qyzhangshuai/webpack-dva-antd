@@ -2,7 +2,7 @@
  * @description:
  * @author: zs
  * @Date: 2020-06-14 13:35:48
- * @LastEditTime: 2020-10-31 15:35:28
+ * @LastEditTime: 2020-10-31 15:57:19
  * @LastEditors: zs
  */
 import React from 'react';
@@ -31,7 +31,6 @@ const Login: React.SFC<LoginProps> = ({
     // window.location.href = 'http://127.0.0.1:4009/usercenter'
     dispatch({ type: `${namespace}/login` })
   }
-  
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   }
