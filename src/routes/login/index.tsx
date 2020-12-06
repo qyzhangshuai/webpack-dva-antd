@@ -7,13 +7,14 @@
  */
 import React from 'react';
 import { Input, Button, Select } from 'antd'
+import { EmojiconTab } from 'z-react-ui'
 import { connect } from 'dva'
 import storage from '@utils/storage'
 import * as config from '@config'
 import moment from 'moment'
 import yay from '@assets/yay.jpg'
 import styles from './index.less'
-
+import Org from './Org'
 const { prefix } = config
 const { Option } = Select;
 interface LoginProps {
@@ -26,7 +27,7 @@ const namespace = 'login'
 const Login: React.SFC<LoginProps> = ({
   dispatch,
 }) => {
-  
+
   const handleLogin = () => {
     storage.setItem(`${prefix}-token`, 'zhangsan')
     // window.location.href = 'http://127.0.0.1:4009/usercenter'
@@ -66,6 +67,12 @@ const Login: React.SFC<LoginProps> = ({
         <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>
+        <EmojiconTab
+          onEmojiChange={emoji => alert(emoji)}
+        />
+        <div>
+          <Org />
+        </div>
         {/* <div>{{}}</div> */}
         <img src={yay} alt="" style={{ width: 100, display: 'block' }} />
         <div>验证moment中国化</div>

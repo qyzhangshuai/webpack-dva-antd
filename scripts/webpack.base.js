@@ -169,7 +169,17 @@ module.exports = env => {
                           'libraryName': 'antd',
                           'libraryDirectory': 'lib',
                           'style': true
-                        }
+                        },
+                        'antd'
+                      ],
+                      [
+                        'import',
+                        {
+                          'libraryName': 'z-react-ui',
+                          'libraryDirectory': 'lib',
+                          'style': true
+                        },
+                        'z-react-ui'
                       ],
                       [
                         '@babel/plugin-proposal-decorators',
