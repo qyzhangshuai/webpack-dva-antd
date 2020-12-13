@@ -15,6 +15,7 @@ import moment from 'moment'
 import yay from '@assets/yay.jpg'
 import styles from './index.less'
 import Org from './Org'
+
 const { prefix } = config
 const { Option } = Select;
 interface LoginProps {

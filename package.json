@@ -8,6 +8,8 @@
     "dev": "node ./scripts/webpack.dev",
     "test": "cross-env ENV=test webpack --config ./scripts/webpack.prod",
     "start": "npm run dev",
+    "postinstall": "patch-package",
+    "fix-dva": "patch-package dva",
     "lint": "eslint --fix --ext .ts,.tsx src"
   },
   "keywords": [],
@@ -103,13 +105,15 @@
     "lodash": "^4.17.15",
     "moment": "^2.26.0",
     "nprogress": "^0.2.0",
+    "patch-package": "^6.2.2",
     "path-to-regexp": "^6.1.0",
+    "postinstall-postinstall": "^2.1.0",
     "prop-types": "^15.7.2",
     "qs": "^6.9.4",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
-    "z-react-ui": "^1.0.4"
+    "z-react-ui": "^1.0.8"
   }
 }
