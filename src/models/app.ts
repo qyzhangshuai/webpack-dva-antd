@@ -9,7 +9,7 @@ import { ReduxSagaEffects, DvaSetupParams, ReduxAction } from '@ts-types/dva';
 import { RootState, AppState } from '@ts-types/store';
 import qs from 'qs';
 import * as config from '@config';
-import { routerRedux } from 'dva/router';
+import { routerRedux } from 'dva';
 import storage from '@utils/storage'
 import getDefaultOpenKeys from '@utils/getDefaultOpenKeys'
 import findFirstMenuItem from '@utils/findFirstMenuItem'

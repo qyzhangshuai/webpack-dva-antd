@@ -6,8 +6,9 @@
  * @LastEditors: zs
  */
 import React from 'react';
-import { Switch, Route, routerRedux } from 'dva/router';
-import dynamic from 'dva/dynamic';
+import { routerRedux, router } from 'dva';
+// @ts-ignore  因为dva中虽然导出了dynamic，但是index.d.ts却没有ts声明，声明在dynamic.d.ts中
+import { dynamic } from 'dva';
 import { ConfigProvider } from 'antd';
 import { DvaApp } from '@ts-types/dva';
 import { History } from '@ts-types/index';
@@ -17,9 +18,8 @@ import App from './routes/app';
 import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');
-
 const { ConnectedRouter } = routerRedux;
-
+const { Switch, Route, } = router
 interface Props {
   history: History;
   app: DvaApp;

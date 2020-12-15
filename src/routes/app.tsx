@@ -8,7 +8,7 @@
 /* global window */
 /* global document */
 import React, {
- FC, ReactNode, CSSProperties, useEffect, useMemo,
+  FC, ReactNode, CSSProperties, useEffect, useMemo,
 } from 'react';
 import NProgress from 'nprogress';
 import { pathToRegexp } from 'path-to-regexp';
@@ -16,7 +16,7 @@ import { MapStateToProps } from 'react-redux';
 import { connect } from 'dva';
 import { Loader, MyLayout } from '@components';
 import { Layout } from 'antd';
-import { withRouter } from 'dva/router';
+import { router } from 'dva';
 import { RootState } from '@ts-types/store';
 import { Dispatch } from '@ts-types/dva';
 import * as config from '@config';
@@ -24,7 +24,6 @@ import logout from '@utils/logout';
 import Error from './error';
 import '../themes/index.less';
 import styles from './app.less';
-
 interface DispatchProps {
   dispatch: Dispatch;
 }
@@ -48,7 +47,7 @@ type Props = StateProps & DispatchProps & OwnProps & RouterProps;
 
 const { Content } = Layout;
 const { Header } = MyLayout;
-console.log('window.location.origin', window.location)
+const { withRouter } = router
 const contentStyle: CSSProperties = {
   position: 'relative',
   overflowX: 'hidden',

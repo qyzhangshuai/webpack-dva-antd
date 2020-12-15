@@ -103,7 +103,9 @@ export {
 
 
 
-
+# 学习打补丁
+[patch-package](https://www.npmjs.com/package/patch-package)
+yarn add patch-package postinstall-postinstall 
 
 
 
