@@ -16,6 +16,7 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
 const notifier = require('node-notifier');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const chalk = require('chalk')
 const { createNotifierCallback, getNetworkIp, newWorkUrl } = require('./utils')
 const { applyMock } = require('./utils/mock');
@@ -26,13 +27,8 @@ const config = configFactory(process.env.ENV || 'development');
 
 const isHttps = false
 const notifyOnErrors = true
-const host = 'localhost';
-let port = '4009';
-
-const PORT = process.env.PORT;
-if (PORT) {
-	port = PORT
-}
+const host = process.env.HOST || '0.0.0.0';
+const port = parseInt(process.env.PORT, 10) || '4009';
 
 const protocol = isHttps === 'true' ? 'https' : 'http';
 

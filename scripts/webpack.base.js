@@ -163,14 +163,15 @@ module.exports = env => {
                       '@babel/preset-typescript',
                     ],
                     'plugins': [
+                      isDev && ["dva-hmr"],
                       [
-                        'import',
-                        {
-                          'libraryName': 'antd',
-                          'libraryDirectory': 'lib',
-                          'style': true
-                        },
-                        'antd'
+                      'import',
+                      {
+                        'libraryName': 'antd',
+                        'libraryDirectory': 'lib',
+                        'style': true
+                      },
+                      'antd'
                       ],
                       [
                         'import',
@@ -194,7 +195,7 @@ module.exports = env => {
                         }
                       ],
                       '@babel/plugin-transform-runtime',
-                    ],
+                    ].filter(Boolean),
                     // 开启babel缓存
                     // 第二次构建时，会读取之前的缓存
                     cacheDirectory: true,

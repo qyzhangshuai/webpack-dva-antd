@@ -9,7 +9,9 @@ import React from 'react';
 import { Input, Button, Select } from 'antd'
 import { EmojiconTab } from 'z-react-ui'
 import { connect } from 'dva'
+import { RootState } from '@ts-types/store'
 import storage from '@utils/storage'
+// import { ConnectedProps } from 'react-redux'
 import * as config from '@config'
 import moment from 'moment'
 import yay from '@assets/yay.jpg'
@@ -18,14 +20,14 @@ import Org from './Org'
 
 const { prefix } = config
 const { Option } = Select;
-interface LoginProps {
-  [props: string]: any
+type LoginProps = Pick<RootState, 'loading'> & {
+  dispatch: any
 }
 
 // #----------- 上: ts类型定义 ----------- 分割线 ----------- 下: JS代码 -----------
 const namespace = 'login'
 
-const Login: React.SFC<LoginProps> = ({
+const Login: React.FC<LoginProps> = ({
   dispatch,
 }) => {
 
@@ -67,7 +69,7 @@ const Login: React.SFC<LoginProps> = ({
         <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>
         <Button onClick={q}>请求数据</Button>
-        <Button onClick={q}>请求数据</Button>
+        <Button onClick={q}>请求数据1</Button>
         <EmojiconTab
           onEmojiChange={emoji => alert(emoji)}
         />
@@ -86,4 +88,4 @@ const Login: React.SFC<LoginProps> = ({
   )
 }
 
-export default connect(({ loading }) => ({ loading }))(Login)
+export default connect(({ loading }: RootState) => ({ loading }))(Login)

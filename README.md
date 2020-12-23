@@ -67,9 +67,25 @@ npm i dva dva-model-extend dva-loading antd immer lodash moment nprogress prop-t
 
 
 
-### 2.js文件的热更新没有实现，只有style文件的热更新
+### ~~2.js文件的热更新没有实现，只有style文件的热更新~~
 
+- 解决
 
+- 使用babel-plugin-dva-hmr
+
+  ```js
+  yarn add babel-plugin-dva-hmr redbox-react --dev
+  ```
+
+  .babelrc
+
+  ```javascript
+  {
+    "plugins": ["dva-hmr"]
+  }
+  ```
+
+  
 
 ### 3.ts文件导入问题
 
@@ -106,6 +122,18 @@ export {
 # 学习打补丁
 [patch-package](https://www.npmjs.com/package/patch-package)
 yarn add patch-package postinstall-postinstall 
+
+
+
+# 使用优化很猛的webpack插件
+
+> 参考官网进行配置
+
+```js
+yarn add hard-source-webpack-plugin --dev
+```
+
+
 
 
 

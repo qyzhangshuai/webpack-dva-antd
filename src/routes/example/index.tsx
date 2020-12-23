@@ -29,7 +29,7 @@ const style111: React.CSSProperties = {
   zIndex: 9999,
 };
 
-const Example: React.SFC<ExampleProps> = ({
+const Example: React.FC<ExampleProps> = ({
   dispatch,
 }) => {
   console.log('11')
