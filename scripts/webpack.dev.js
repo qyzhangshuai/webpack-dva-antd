@@ -28,7 +28,7 @@ const config = configFactory(process.env.ENV || 'development');
 portfinder.basePort = parseInt(process.env.PORT, 10) || '8017';
 portfinder.getPortPromise()
 	.catch((err) => {
-		console.log('webpack启动错误',err)
+		console.log('webpack启动错误', err)
 	})
 	.then((port) => {
 		const isHttps = false
