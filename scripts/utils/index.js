@@ -50,8 +50,16 @@ function getNetworkIp() {
   return needHost;
 }
 
+function prettyPrintHost(host) {
+  const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
+  if (isUnspecifiedHost) {
+    return 'localhost';
+  }
+  return host
+}
+
 function newWorkUrl(isHttps, host, port) {
-  return `${isHttps ? 'https' : 'http'}://${host}:${port}/`
+  return `${isHttps ? 'https' : 'http'}://${prettyPrintHost(host)}:${port}/`
 }
 
 module.exports = {
